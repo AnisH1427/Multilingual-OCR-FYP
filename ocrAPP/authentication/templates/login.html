@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>fypDesign</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
+    <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/Clients-Slider.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/Login-Box-En-login-box-en.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/Login-Page-B5.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/Login-with-overlay-image.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+</head>
+
+<body>
+    <div class="d-flex flex-column justify-content-center" id="login-box">
+        <div class="login-box-header">
+            <h4 style="color:rgb(139,139,139);margin-bottom:0px;font-weight:400;font-size:27px;">Welcome to Intelligent Reader</h4>
+        </div>
+        <div class="login-box-content">
+            <div class="fb-login box-shadow"></div>
+            <div class="gp-login box-shadow"><a class="d-flex flex-row align-items-center social-login-link" style="margin-bottom:10px;" href="#"><i class="fa fa-google" style="color:rgb(255,255,255);width:56px;"></i>Login with Google+</a></div>
+        </div>
+        <div class="d-flex flex-row align-items-center login-box-seperator-container">
+            <div class="login-box-seperator"></div>
+            <div class="login-box-seperator-text">
+                <p style="margin-bottom:0px;padding-left:10px;padding-right:10px;font-weight:400;color:rgb(201,201,201);">or</p>
+            </div>
+            <div class="login-box-seperator"></div>
+        </div>
+        <div class="email-login" style="background-color:#ffffff;"><input type="email" class="email-imput form-control" style="margin-top:10px;" required="" placeholder="Email" minlength="6"><input type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Password" minlength="6"></div>
+        <div class="submit-row" style="margin-bottom:8px;padding-top:0px;"><button class="btn btn-primary d-block box-shadow w-100" id="submit-id-submit" type="submit">Login</button>
+            <div class="d-flex justify-content-between">
+                <div class="form-check form-check-inline" id="form-check-rememberMe"><input class="form-check-input" type="checkbox" id="formCheck-1" for="remember" style="cursor:pointer;" name="check"><label class="form-check-label" for="formCheck-1"><span class="label-text">Remember Me</span></label></div><a id="forgot-password-link" href="#">Forgot Password?</a>
+            </div>
+        </div>
+        <div id="login-box-footer" style="padding:10px 20px;padding-bottom:23px;padding-top:18px;">
+            <p style="margin-bottom:0px;">Don't you have an account?<a id="register-link" href="#">Sign Up!</a></p>
+        </div>
+    </div>
+    {% comment %} <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/Clients-Slider-slick.js"></script>
+    <script src="assets/js/Clients-Slider-untitled.js"></script> {% endcomment %}
+    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/Clients-Slider-slick.js' %}"></script>
+    <script src="{% static 'assets/js/Clients-Slider-untitled.js' %}"></script>
+</body>
+
+</html>

@@ -25,12 +25,10 @@ SECRET_KEY = 'django-insecure-%5ws5j@i(2j+zn9gb)t-x8#!lpx7nrm1!@kwz@n+hyh^7rk-a+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
+    'authentication.apps.AuthenticationConfig',
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authentication.apps.AuthenticationConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'allauth',
@@ -143,10 +140,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # Add this below line in settings.py
-# STATICFILES_DIRS = [
-#     BASE_DIR / "static",
-# ]
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+AUTH_USER_MODEL = 'authentication.CustomUser'
+APPEND_SLASH = False
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
