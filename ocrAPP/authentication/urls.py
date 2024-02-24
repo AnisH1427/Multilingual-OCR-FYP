@@ -9,7 +9,9 @@ urlpatterns = [
     path('api/auth/logout/', LogoutView.as_view(), name='rest_logout'),
     path('api/auth/user/', UserDetailsView.as_view(), name='rest_user_details'),
     path('api/auth/register/', CustomRegisterView.as_view(), name='api/auth/rest_register'),
+    
     path('', views.home, name='home'),
-    path('login/', views.login, name='login'),
+    path('login/', views.loginpage, name='loginpage'),
     path('register/',views.register,name='register'),
+    path('login_with_token/', views.login_with_token, name='login_with_token'),   
 ]

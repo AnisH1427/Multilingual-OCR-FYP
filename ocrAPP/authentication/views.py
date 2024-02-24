@@ -4,12 +4,16 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
 from .models import CustomUser
 import json
+from django.contrib.auth import get_user_model
+from django.contrib.auth import login 
+from rest_framework.authtoken.models import Token
+from django.shortcuts import redirect
 
 # Create your views here.
 def home(request):
     return render(request,'index.html')
 
-def login(request):
+def loginpage(request):
     return render(request,'login.html')
 
 from django.core.exceptions import ValidationError
@@ -41,3 +45,16 @@ def register(request):
             return JsonResponse({'message': str(e)}, status=400)
     else:
         return render(request,'signup.html')
+    
+def login_with_token(request):
+    token_key = request.GET.get('token')
+    if token_key:
+        try:
+            token = Token.objects.get(key=token_key)
+            user = token.user
+            login(request,user)
+            return redirect('/app/home/')
+        except Token.DoesNotExist:
+            return JsonResponse({'message':'Invalid token'}, status=400)
+    else:
+        return JsonResponse({'message':'Token parameter is missing'}, status=400)

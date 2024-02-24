@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+{% load static %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>fypDesign</title>
+<link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
+<link rel="stylesheet" href="{% static 'assets/fonts/fontawesome-all.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/fonts/fontawesome5-overrides.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/Clients-Slider.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/Drag--Drop-Upload-Form.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/Login-Box-En-login-box-en.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/Login-Page-B5.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/Login-with-overlay-image.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+<!-- ... -->
+    <style>
+      .navbar {
+          z-index: 1000; /* any number larger than the z-index of .dashed_upload */
+          position: relative; /* required for z-index to take effect */
+      }
+      
+      .dashed_upload {
+          z-index: 1; /* any number smaller than the z-index of .navbar */
+          position: relative; /* required for z-index to take effect */
+      }
+      </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md bg-body py-3">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bezier">
+                       
+                    </svg></span><span>Intelligent Reader</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="btn-group" role="group"></div>
+            <div class="collapse navbar-collapse" id="navcol-2">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Second Item</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                </ul>
+                <div class="btn-group" role="group"></div><a class="btn btn-primary ms-md-2" role="button" href="#"><i class="far fa-user"></i></a>
+            </div>
+        </div>
+    </nav>
+<div class="dashed_upload"><div class="wrapper">
+  <form method="post" action="{% url 'home' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="drop">
+      <div class="cont">
+        <i class="fa fa-cloud-upload"></i>
+        <div class="tit">
+          Drag & Drop
+        </div>
+        <div class="desc">
+          or 
+        </div>
+        <div class="browse">
+          click here to browse
+        </div>
+      </div>
+     
+      <output id="list"></output>
+      <input id="files" name="document" type="file" onchange="previewFile()"/>
+    </div>
+    <button type="submit" style="margin-top: 20px; margin-right: 10px; float: right;">Upload</button>
+    <div id="preview"></div>
+</form>
+</div>
+<div id="preview"></div>
+<br><br><br><br><br>
+<!-- home.html -->
+{% if prediction_text %}
+    <p>Predicted Text: {{ prediction_text }}</p>
+{% endif %}
+<script src = "{% static 'assets/js/app/dragdrop.js' %}"></script>
+<script>
+  function previewFile() {
+    const preview = document.querySelector('#preview');
+    const file = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+      // convert image file to base64 string
+      preview.innerHTML = '<img src="' + reader.result + '">';
+    }, false);
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+  </script>
+</body>
+
+</html>

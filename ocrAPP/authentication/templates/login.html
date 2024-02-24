@@ -38,8 +38,16 @@
             </div>
             <div class="login-box-seperator"></div>
         </div>
-        <div class="email-login" style="background-color:#ffffff;"><input type="email" class="email-imput form-control" style="margin-top:10px;" required="" placeholder="Email" minlength="6"><input type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Password" minlength="6"></div>
-        <div class="submit-row" style="margin-bottom:8px;padding-top:0px;"><button class="btn btn-primary d-block box-shadow w-100" id="submit-id-submit" type="submit">Login</button>
+        <form id="login-form" method="POST">
+            <div class="email-login" style="background-color:#ffffff;">
+                <input type="text" class="username-input form-control" style="margin-top:10px;" required="" placeholder="Username" minlength="4">
+                <input type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Password" minlength="4">
+            </div>
+            <div class="submit-row" style="margin-bottom:8px;padding-top:0px;">
+                <button class="btn btn-primary d-block box-shadow w-100" id="submit-id-submit" type="submit">Login</button>
+            </div>
+        </form>
+        <div class="submit-row" style="margin-bottom:8px;padding-top:0px;">
             <div class="d-flex justify-content-between">
                 <div class="form-check form-check-inline" id="form-check-rememberMe"><input class="form-check-input" type="checkbox" id="formCheck-1" for="remember" style="cursor:pointer;" name="check"><label class="form-check-label" for="formCheck-1"><span class="label-text">Remember Me</span></label></div><a id="forgot-password-link" href="#">Forgot Password?</a>
             </div>
@@ -52,8 +60,8 @@
     <script src="assets/js/Clients-Slider-slick.js"></script>
     <script src="assets/js/Clients-Slider-untitled.js"></script> {% endcomment %}
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'assets/js/Clients-Slider-slick.js' %}"></script>
-    <script src="{% static 'assets/js/Clients-Slider-untitled.js' %}"></script>
+    <script src="{% static 'assets/js/login.js'%}"></script>
+    
 </body>
 
 </html>
