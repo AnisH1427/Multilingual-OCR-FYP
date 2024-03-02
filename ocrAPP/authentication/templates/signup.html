@@ -7,51 +7,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>fypDesign</title>
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
-    <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Clients-Slider.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Login-Box-En-login-box-en.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Login-Page-B5.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Login-with-overlay-image.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}">
+    {% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Clients-Slider.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Login-Box-En-login-box-en.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Login-Page-B5.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Login-with-overlay-image.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}"> {% endcomment %}
 </head>
 
 <body>
     <div class="row register-form">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-6 offset-md-3">
             <form id="registerForm" class="custom-form" action="{% url 'register' %}" method="post">
                 {% csrf_token %}
-                <h1>Register Form</h1>
+
+                <div class="logo-header">
+                    <h2 class='logo-heading'>Welcome to Intelligent Reader</h2>
+                    <img class="logo" src="{% static 'assets/img/brands/IR.png' %}" alt="logo">
+                  </div>
+
+                <h5>Register for a new Account!</h5>
                 <div class="row form-group">
-                    <div class="col-sm-4 label-column"><label class="col-form-label" for="name-input-field">Name </label></div>
-                    <div class="col-sm-6 input-column">
+                    <div class="col-sm-4 label-column"><label class="col-form-label" for="name-input-field">Username </label></div>
+                    <div class="col-sm-5 input-column">
                         <input id="username" class="form-control" type="text" name="username" required></div>
                 </div>
                 <div class="row form-group">
                     <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Email </label></div>
-                    <div class="col-sm-6 input-column">
+                    <div class="col-sm-5 input-column">
                         <input id="email" class="form-control" type="email" name="email" required></div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-sm-4 label-column"><label class="col-form-label" for="pawssword-input-field">Password </label></div>
-                    <div class="col-sm-6 input-column">
-                        <input id="password" class="form-control" type="password" name="password" required></div>
+                    <div class="col-sm-4 label-column">
+                        <label class="col-form-label" for="password">Password </label>
+                    </div>
+                    <div class="col-sm-5 input-column">
+                        <input id="password" class="form-control" type="password" name="password" required>
+                        <span toggle="#password" class="fa fa-lg fa-eye field-icon toggle-password"></span>
+                    </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-sm-4 label-column"><label class="col-form-label" for="repeat-pawssword-input-field">Confirm Password</label></div>
-                    <div class="col-sm-6 input-column">
-                        <input id="confirmPassword" class="form-control" type="password" name="confirmPassword" required></div>
+                    <div class="col-sm-4 label-column">
+                        <label class="col-form-label" for="confirmPassword">Confirm Password</label>
+                    </div>
+                    <div class="col-sm-5 input-column">
+                        <input id="confirmPassword" class="form-control" type="password" name="confirmPassword" required>
+                        <span toggle="#confirmPassword" class="fa fa-lg fa-eye field-icon toggle-password fa-lg"></span>
+                    </div>
                 </div>
                 <div class="row form-group">
                     <div class="col-sm-4 label-column">
                         <label class="col-form-label" for="phone">Phone Number</label>
                     </div>
-                    <div class="col-sm-6 input-column">
+                    <div class="col-sm-5 input-column">
                         <input class="form-control" type="tel" id="phone" name="phone" required>
                     </div>
                 </div>
@@ -60,17 +76,21 @@
                     <div class="col-sm-4 label-column">
                         <label class="col-form-label" for="address">Address</label>
                     </div>
-                    <div class="col-sm-6 input-column">
+                    <div class="col-sm-5 input-column">
                         <input class="form-control" type="text" id="address" name="address" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col-sm-4 label-column">
+
                         <label class="col-form-label">Gender</label>
                     </div>
-                    <div class="col-sm-8 input-column">
+                    
+                    <div class="col-sm-6 input-column" >
                         <div class="form-check form-check-inline">
+                            
                             <input  type="radio" name="gender" id="male" value="male" required>
+                            
                             <label class="form-check-label" for="male">
                                 Male
                             </label>
@@ -89,18 +109,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" name="terms" required style="margin-left: 130px;"><label class="form-check-label" for="formCheck-1" style="margin-left: 2px;">I've read and accept the terms and conditions</label></div>
-                <button id="registerButton" class="btn btn-light submit-button" type="submit">Create Account</button>
+                {% comment %} <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" name="terms" required style="margin-left: 130px;"><label class="form-check-label" for="formCheck-1" style="margin-left: 2px;">I've read and accept the terms and conditions</label></div> {% endcomment %}
+                <div id="recaptchaWidget" class="g-recaptcha" data-sitekey="6LfrX4cpAAAAAL8AAjRK6p-SXkJOs_9OjABD4lnN" data-callback="onSubmit" data-size="invisible"></div>
+
+                <button id="registerButton" class="btn btn-light submit-button" type="button">Create Account</button>   
             </form>
         </div>
     </div>
     {% comment %} <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/Clients-Slider-slick.js"></script>
     <script src="assets/js/Clients-Slider-untitled.js"></script> {% endcomment %}
-    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    {% comment %} <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script> {% endcomment %}
     {% comment %} <script src="{% static 'assets/js/Clients-Slider-slick.js' %}"></script> {% endcomment %}
     {% comment %} <script src="{% static 'assets/js/Clients-Slider-untitled.js' %}"></script> {% endcomment %}
+    {% comment %} <script src="https://www.google.com/recaptcha/api.js" async defer></script> {% endcomment %}
     <script src="{% static 'assets/js/main.js'%}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
+<script>
+    document.querySelectorAll('.toggle-password').forEach(function (togglePassword) {
+        togglePassword.addEventListener('click', function(e) {
+            // toggle the type attribute
+            const type = e.target.previousElementSibling.getAttribute('type') === 'password' ? 'text' : 'password';
+            e.target.previousElementSibling.setAttribute('type', type);
+            // toggle the eye / eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>
 
 </html>

@@ -4,6 +4,25 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     const username = document.querySelector('.username-input').value;
     const password = document.querySelector('.password-input').value;
 
+    // Check if username field is empty
+    if (!username) {
+        return swal("Oops!", "Looks like you forgot to fill in the username.", "warning");
+    }
+
+    // Check if password field is empty
+    if (!password) {
+        return swal("Oops!", "Looks like you forgot to fill in the password.", "warning");
+    }
+
+    // Check if fields are at least 4 characters long
+    if (username.length < 4) {
+        return swal("Oops!", "Username must be at least 4 characters long.", "warning");
+    }
+
+    if (password.length < 4) {
+        return swal("Oops!", "Password must be at least 4 characters long.", "warning");
+    }
+    
     fetch('http://127.0.0.1:8000/api/auth/login/', { // Added trailing slash
         method: 'POST',
         headers: {
@@ -35,12 +54,13 @@ document.getElementById('login-form').addEventListener('submit', function(event)
                 console.log(userData);
                 // Do something with userData if needed
             })
-            .catch(error => console.log('Error:', error));
+            .catch(error => swal("Error!", "There was a problem fetching your user data.", "error"));
+            swal("Success!", "You have successfully logged in.", "success");
             window.location.replace('/login_with_token/?token=' + data.key);
         } else {
             // Invalid credentials
-            alert('Invalid credentials');
+            swal("Oops!", "It seems like your username or password is incorrect.", "error");
         }
     })
-    .catch(error => console.log('Error:', error));
+    .catch(error => swal("Error!", "There was a problem logging you in.", "error"));
 });

@@ -38,10 +38,10 @@
             </div>
             <div class="login-box-seperator"></div>
         </div>
-        <form id="login-form" method="POST">
+        <form id="login-form" method="POST" novalidate>
             <div class="email-login" style="background-color:#ffffff;">
-                <input type="text" class="username-input form-control" style="margin-top:10px;" required="" placeholder="Username" minlength="4">
-                <input type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Password" minlength="4">
+                <input type="text" class="username-input form-control" style="margin-top:10px;" placeholder="Username">
+                <input type="password" class="password-input form-control" style="margin-top:10px;" placeholder="Password">
             </div>
             <div class="submit-row" style="margin-bottom:8px;padding-top:0px;">
                 <button class="btn btn-primary d-block box-shadow w-100" id="submit-id-submit" type="submit">Login</button>
@@ -59,6 +59,7 @@
     {% comment %} <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/Clients-Slider-slick.js"></script>
     <script src="assets/js/Clients-Slider-untitled.js"></script> {% endcomment %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/login.js'%}"></script>
     

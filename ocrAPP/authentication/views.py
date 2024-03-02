@@ -8,6 +8,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login 
 from rest_framework.authtoken.models import Token
 from django.shortcuts import redirect
+import requests
+from django.core.exceptions import ValidationError
 
 # Create your views here.
 def home(request):
@@ -27,6 +29,19 @@ class CustomRegisterView(generics.CreateAPIView):
 def register(request):
     if request.method == "POST":
         data = json.loads(request.body)
+
+        # Verify the reCAPTCHA response
+        recaptcha_response = data.get('g-recaptcha-response')
+        data = {
+            'secret': '6LfrX4cpAAAAAGgep1z-00Ig8lWpGicNIm8_uJJV',
+            'response': recaptcha_response
+        }
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        result = r.json()
+
+        if not result['success']:
+            return JsonResponse({'message': 'Invalid reCAPTCHA. Please try again.'}, status=400)
+
         if CustomUser.objects.filter(phone_number=data['phone_number']).exists():
             return JsonResponse({'message':'A user with this phone number already exists.'}, status=400)
         try:
