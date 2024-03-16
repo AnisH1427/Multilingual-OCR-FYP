@@ -3,7 +3,9 @@ from django.shortcuts import render
 from .utils import ImageToWordModel
 import cv2
 import numpy as np
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='login_with_token/')
 def home(request):
     if request.method == 'POST' and 'document' in request.FILES:
         uploaded_file = request.FILES['document']

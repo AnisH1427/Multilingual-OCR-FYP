@@ -56,7 +56,9 @@ document.getElementById('login-form').addEventListener('submit', function(event)
             })
             .catch(error => swal("Error!", "There was a problem fetching your user data.", "error"));
             swal("Success!", "You have successfully logged in.", "success");
-            window.location.replace('/login_with_token/?token=' + data.key);
+            setTimeout(function() {
+                window.location.replace('/login_with_token/?token=' + data.key);
+            }, 3000);
         } else {
             // Invalid credentials
             swal("Oops!", "It seems like your username or password is incorrect.", "error");

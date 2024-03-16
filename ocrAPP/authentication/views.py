@@ -47,7 +47,8 @@ def register(request):
         try:
             user = CustomUser(
                 username = data['username'],
-                password = make_password(data['password']),
+                # password = make_password(data['password']),
+                password = data['password'],
                 email = data['email'],
                 phone_number = data['phone_number'],
                 address = data['address'],
