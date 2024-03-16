@@ -11,25 +11,33 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
     <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Clients-Slider.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Clients-Slider.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'assets/css/Login-Box-En-login-box-en.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/Login-Page-B5.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Login-with-overlay-image.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Login-with-overlay-image.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
 </head>
 
 <body>
     <div class="d-flex flex-column justify-content-center" id="login-box">
-        <div class="login-box-header">
-            <h4 style="color:rgb(139,139,139);margin-bottom:0px;font-weight:400;font-size:27px;">Welcome to Intelligent Reader</h4>
+        {% comment %} <div class="login-box-header"> {% endcomment %}
+        <div class="logo-header">
+            <img class="logo" src="{% static 'assets/img/brands/IR.png' %}" alt="logo">
+            <h4 class='logo-heading'>Welcome to Intelligent Reader</h4>
         </div>
         <div class="login-box-content">
-            <div class="fb-login box-shadow"></div>
-            <div class="gp-login box-shadow"><a class="d-flex flex-row align-items-center social-login-link" style="margin-bottom:10px;" href="#"><i class="fa fa-google" style="color:rgb(255,255,255);width:56px;"></i>Login with Google+</a></div>
+            {% comment %} <div class="fb-login box-shadow"></div> {% endcomment %}
+            <div class="gp-login box-shadow">
+                <a class="d-flex flex-row align-items-center social-login-link" style="margin-bottom:10px;" href="#">
+                    <img class="googlelogo" src="{% static 'assets/img/brands/google.png' %}" alt="googlelogo">
+                    {% comment %} <i class="fa fa-google"></i> {% endcomment %}
+                    Login with Google+
+                </a>
+            </div>
         </div>
         <div class="d-flex flex-row align-items-center login-box-seperator-container">
             <div class="login-box-seperator"></div>
