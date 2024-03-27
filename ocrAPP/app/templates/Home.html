@@ -55,7 +55,41 @@
             </div>
         </div>
     </nav>
-<div class="dashed_upload"><div class="wrapper">
+  <div class ="container-fluid mt-2">
+    <div class="row">
+      <div class="col ">
+        {% comment %} <h2 class="text-center">Upload your file</h2> {% endcomment %}
+        <div class="dashed_upload">
+          {% comment %} <div class="wrapper"> {% endcomment %}
+            <form method="post" action="{% url 'home' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="drop">
+                <div class="cont">
+                  <i class="fa fa-cloud-upload"></i>
+                  <div class="tit">
+                    Drag & Drop
+                  </div>
+                  <div class="desc">
+                    or 
+                  </div>
+                  <div class="browse">
+                    click here to browse
+                  </div>
+                </div>
+                <output id="list"></output>
+                <input id="files" name="document" type="file" onchange="previewFile()"/>
+              </div>
+          {% comment %} </div> {% endcomment %}
+        </div>
+      </div>
+      
+      <div class="col">
+        <h2 class="text-center">Processing</h2>
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px; margin-right: 300px; float: right;">Predict</button>
+            </form>
+      </div>
+    </div>
+{% comment %} <div class="dashed_upload"><div class="wrapper">
   <form method="post" action="{% url 'home' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="drop">
@@ -78,7 +112,7 @@
     <button type="submit" style="margin-top: 20px; margin-right: 10px; float: right;">Upload</button>
     <div id="preview"></div>
 </form>
-</div>
+</div> {% endcomment %}
 <div id="preview"></div>
 <br><br><br><br><br>
 <!-- home.html -->
