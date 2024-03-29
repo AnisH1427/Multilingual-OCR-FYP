@@ -37,17 +37,16 @@
         }
 
         .prev-button-container {
-              position: absolute;
-              top: 20px;
-              left: 1%;
-              transform: translateX(-50%);
-        }
-        .swiper-button-prev {
-          background-image: url(/assets/icons/arrow-circle-left.svg) !important;
-          background-repeat: no-repeat;
-          background-size: 100% auto;
-          background-position: center;
-          }
+          position: absolute;
+          top:10px; /* Adjust this value to move the button down */
+          left: 20px; /* Adjust this value to position the button horizontally */
+          width: 30px; /* Adjust width as needed */
+          height: 30px; /* Adjust height as needed */
+          /* Change cursor to pointer on hover */
+      }
+  
+      /* Hide default arrow */
+     
       </style>
 </head>
 
@@ -74,7 +73,7 @@
           <div class="swiper-wrapper"> <!-- Corrected typo from swiper-wraper to swiper-wrapper -->
               <div class="swiper-slide">
                   <div class="row gx-2">
-                      <div class="col p-3 border bg-light border-5 border-gray">
+                      <div class="col p-3 border-top border-bottom bg-light border-5 border-gray">
                           <div class="dashed_upload">
                               <form method="post" action="{% url 'home' %}" enctype="multipart/form-data">
                                   {% csrf_token %}
@@ -97,7 +96,7 @@
                               </form>
                           </div>
                       </div>
-                      <div class="col-md-auto p-3 mx-4 border bg-light border-5 border-gray">
+                      <div class="col-md-auto p-3 mx-4  border-top border-bottom bg-light border-5 border-gray">
                           <div class="dropdown">
                               <button class="btn btn-secondary dropdown-toggle px-2 py-2" type="button" id="dropdownMenuButton2"
                                   data-bs-toggle="dropdown" aria-expanded="false">
@@ -130,12 +129,12 @@
               </div>
               <div class="swiper-slide">
                 <div class="prev-button-container">
-                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-prev">
+                  </div>
               </div>
                   <div class="row gx-2">
-                      <div class="col">
-                          <div class="row">
-                              <div class="col-6 p-3">
+                      
+                              <div class="col p-3 border-top border-bottom bg-light border-5 border-gray">
                                   <h4 class="text-center">Image Pre-Processing</h4>
                                   <label for="threshold" class="form-label">Threshold</label>
                                   <input type="range" class="form-range" id="threshold">
@@ -153,15 +152,13 @@
                                   <button type="button" class="btn btn-outline-success" style="padding:10px; margin-top:20px; ">Detect Characters</button>
                               </div>
   
-                              <div class="col-6 p-3 border-top border-bottom border-end bg-light border-5 border-gray">
+                              <div class="col p-3 border-top border-bottom bg-light border-5 border-gray">
   
                               </div>
                           </div>
-                      </div>
-                  </div>
               </div>
           </div>
-          <div class="swiper-pagination"></div>
+          {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
       </div>
   </div>  
 
