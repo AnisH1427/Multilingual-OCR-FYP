@@ -1,40 +1,40 @@
-*, *:before, *:after {
+/* *, *:before, *:after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-}
+} */
 
-input:focus, select:focus, textarea:focus, button:focus {
+/* input:focus, select:focus, textarea:focus, button:focus {
   outline: none;
-}
+} */
 
 .drop {
-  width: 90%;
-  height: 220px;
-  border: 3px dashed #DADFE3;
-  border-radius: 15px;
-  overflow: hidden;
+  /* width: 90%; */
+  /* height: 220px; */
+  /* border: 3px dashed #DADFE3; */
+  /* border-radius: 15px; */
+  /* overflow: hidden; */
   text-align: center;
-  background: transparent;
-  -webkit-transition: all 0.5s ease-out;
-  -moz-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
-  margin-top: 0px;
-  margin-right: auto;
+  /* background: transparent; */
+  /* -webkit-transition: all 0.5s ease-out; */
+  /* -moz-transition: all 0.5s ease-out; */
+  /* transition: all 0.5s ease-out; */
+  /* margin-top: 0px;*/
+  /* margin-right: auto;
   margin-left: auto;
   margin-bottom: 10px;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
-  right: 0;
-}
+  right: 0; */
+} 
 
 .drop .cont {
-  width: 500px;
-  height: 170px;
+  /* width: 500px; */
+  /* height: 170px; */
   color: #8E99A5;
-  -webkit-transition: all 0.5s ease-out;
+  /* -webkit-transition: all 0.5s ease-out;
   -moz-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
   margin: auto;
@@ -42,7 +42,7 @@ input:focus, select:focus, textarea:focus, button:focus {
   top: 0;
   left: 0;
   bottom: 0;
-  right: 0;
+  right: 0; */
 }
 
 .drop .cont i {
@@ -57,10 +57,10 @@ input:focus, select:focus, textarea:focus, button:focus {
   font-weight: 900;
 }
 
-.drop .cont .desc {
+/* .drop .cont .desc {
   color: #787e85;
   font-size: 18px;
-}
+} */
 
 .drop .cont .browse {
   margin: 10px 25%;

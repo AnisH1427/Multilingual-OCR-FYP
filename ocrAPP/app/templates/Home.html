@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
 <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome-all.min.css' %}">
 <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
-<link rel="stylesheet" href="{% static 'assets/fonts/fontawesome5-overrides.min.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome5-overrides.min.css' %}"> {% endcomment %}
 <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}">
 <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}">
 <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}">
@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}">
 <link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}">
 <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <!-- ... -->
     <style>
       .navbar {
@@ -33,7 +34,20 @@
       .dashed_upload {
           z-index: 1; /* any number smaller than the z-index of .navbar */
           position: relative; /* required for z-index to take effect */
-      }
+        }
+
+        .prev-button-container {
+              position: absolute;
+              top: 20px;
+              left: 1%;
+              transform: translateX(-50%);
+        }
+        .swiper-button-prev {
+          background-image: url(/assets/icons/arrow-circle-left.svg) !important;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+          background-position: center;
+          }
       </style>
 </head>
 
@@ -55,6 +69,7 @@
             </div>
         </div>
     </nav>
+<<<<<<< HEAD
   <div class ="container-fluid mt-2">
     <div class="row">
       <div class="col ">
@@ -113,6 +128,104 @@
     <div id="preview"></div>
 </form>
 </div> {% endcomment %}
+=======
+    <div class="container-sm max-4">
+      <div class="swiper">
+          <div class="swiper-wrapper"> <!-- Corrected typo from swiper-wraper to swiper-wrapper -->
+              <div class="swiper-slide">
+                  <div class="row gx-2">
+                      <div class="col p-3 border bg-light border-5 border-gray">
+                          <div class="dashed_upload">
+                              <form method="post" action="{% url 'home' %}" enctype="multipart/form-data">
+                                  {% csrf_token %}
+                                  <div class="drop">
+                                      <div class="cont">
+                                          <i class="fa fa-cloud-upload"></i>
+                                          <div class="tit">
+                                              Drag & Drop
+                                          </div>
+                                          <div class="desc">
+                                              or
+                                          </div>
+                                          <div class="browse">
+                                              click here to browse
+                                          </div>
+                                      </div>
+                                      <output id="list"></output>
+                                      <input id="files" name="document" type="file" onchange="previewFile()" />
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                      <div class="col-md-auto p-3 mx-4 border bg-light border-5 border-gray">
+                          <div class="dropdown">
+                              <button class="btn btn-secondary dropdown-toggle px-2 py-2" type="button" id="dropdownMenuButton2"
+                                  data-bs-toggle="dropdown" aria-expanded="false">
+                                  Select Language
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                  <li><a class="dropdown-item active" href="#">English</a></li>
+                                  <li><a class="dropdown-item" href="#">Hindi</a></li>
+                                  <li><a class="dropdown-item" href="#">Nepali</a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li><a class="dropdown-item" href="#">need help?</a></li>
+                              </ul>
+                          </div>
+                          <div class="dropdown">
+                              <button class="btn btn-secondary dropdown-toggle px-3 py-2" type="button" id="dropdownMenuButton2"
+                                  data-bs-toggle="dropdown" aria-expanded="false">
+                                  Output Format
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                  <li><a class="dropdown-item active" href="#">.txt</a></li>
+                                  <li><a class="dropdown-item" href="#">.pdf</a></li>
+                                  <li><a class="dropdown-item" href="#">.docs</a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li><a class="dropdown-item" href="#">need help?</a></li>
+                              </ul>
+                          </div>
+                          <button id="nextButton" class="btn btn-outline-info py-2 px-5 btn-lg btn-block">Next</button>
+                      </div>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="prev-button-container">
+                  <div class="swiper-button-prev"></div>
+              </div>
+                  <div class="row gx-2">
+                      <div class="col">
+                          <div class="row">
+                              <div class="col-6 p-3">
+                                  <h4 class="text-center">Image Pre-Processing</h4>
+                                  <label for="threshold" class="form-label">Threshold</label>
+                                  <input type="range" class="form-range" id="threshold">
+                                  <div class="p-1 mb-2 bg-secondary text-white">Threshold Value</div>
+  
+                                  <label for="binarization" class="form-label">Binarization</label>
+                                  <input type="range" class="form-range" id="binarization">
+                                  <div class="p-1 mb-2 bg-secondary text-white">Binary value</div>
+  
+                                  <label for="dilation" class="form-label">Dilation</label>
+                                  <input type="range" class="form-range" id="dilation">
+                                  <div class="p-1 mb-2 bg-secondary text-white">Dilation value</div>
+  
+                                  <button type="button" class="btn btn-outline-danger" style="margin-right: 50px; margin-left: 50px; margin-top:20px; padding:10px;">Set Default Value</button>
+                                  <button type="button" class="btn btn-outline-success" style="padding:10px; margin-top:20px; ">Detect Characters</button>
+                              </div>
+  
+                              <div class="col-6 p-3 border-top border-bottom border-end bg-light border-5 border-gray">
+  
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="swiper-pagination"></div>
+      </div>
+  </div>  
+
+>>>>>>> processingDocumentUI
 <div id="preview"></div>
 <br><br><br><br><br>
 <!-- home.html -->
@@ -120,6 +233,31 @@
     <p>Predicted Text: {{ prediction_text }}</p>
 {% endif %}
 <script src = "{% static 'assets/js/app/dragdrop.js' %}"></script>
+<script src = "{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  var swiper = new Swiper('.swiper', {
+      // Optional parameters
+      direction: 'horizontal',
+      loop: true,
+
+      // Navigation arrows
+      navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+      },
+
+      // Pagination
+      pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+      },
+  });
+  //Add event listener to the "Next" button to move to the next slide
+    document.getElementById('nextButton').addEventListener('click', function() {
+        swiper.slideNext();
+    });
+</script>
 <script>
   function previewFile() {
     const preview = document.querySelector('#preview');
