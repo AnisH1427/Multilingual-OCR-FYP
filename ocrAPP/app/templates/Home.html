@@ -37,17 +37,16 @@
         }
 
         .prev-button-container {
-              position: absolute;
-              top: 20px;
-              left: 1%;
-              transform: translateX(-50%);
-        }
-        .swiper-button-prev {
-          background-image: url(/assets/icons/arrow-circle-left.svg) !important;
-          background-repeat: no-repeat;
-          background-size: 100% auto;
-          background-position: center;
-          }
+          position: absolute;
+          top:10px; /* Adjust this value to move the button down */
+          left: 20px; /* Adjust this value to position the button horizontally */
+          width: 30px; /* Adjust width as needed */
+          height: 30px; /* Adjust height as needed */
+          /* Change cursor to pointer on hover */
+      }
+  
+      /* Hide default arrow */
+     
       </style>
 </head>
 
@@ -134,7 +133,7 @@
           <div class="swiper-wrapper"> <!-- Corrected typo from swiper-wraper to swiper-wrapper -->
               <div class="swiper-slide">
                   <div class="row gx-2">
-                      <div class="col p-3 border bg-light border-5 border-gray">
+                      <div class="col p-3  bg-light border-5 border-gray">
                           <div class="dashed_upload">
                               <form method="post" action="{% url 'home' %}" enctype="multipart/form-data">
                                   {% csrf_token %}
@@ -157,29 +156,31 @@
                               </form>
                           </div>
                       </div>
-                      <div class="col-md-auto p-3 mx-4 border bg-light border-5 border-gray">
-                          <div class="dropdown">
-                              <button class="btn btn-secondary dropdown-toggle px-2 py-2" type="button" id="dropdownMenuButton2"
-                                  data-bs-toggle="dropdown" aria-expanded="false">
-                                  Select Language
-                              </button>
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item active" href="#">English</a></li>
-                                  <li><a class="dropdown-item" href="#">Hindi</a></li>
-                                  <li><a class="dropdown-item" href="#">Nepali</a></li>
+                      <div class="col-md-auto p-3 mx-4 bg-light border-5 border-gray">
+                        <h4>Select the document language</h4>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle px-2 py-2" type="button" id="languageButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Language
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="languageButton">
+                                  <li><a class="dropdown-item active" href="#" onclick="setLanguage('English')">English</a></li>
+                                  <li><a class="dropdown-item" href="#" onclick="setLanguage('Hindi')">Hindi</a></li>
+                                  <li><a class="dropdown-item" href="#" onclick="setLanguage('Nepali')">Nepali</a></li>
                                   <li><hr class="dropdown-divider"></li>
                                   <li><a class="dropdown-item" href="#">need help?</a></li>
                               </ul>
                           </div>
+                          <h4>Choose the output format
                           <div class="dropdown">
-                              <button class="btn btn-secondary dropdown-toggle px-3 py-2" type="button" id="dropdownMenuButton2"
+                              <button class="btn btn-secondary dropdown-toggle px-3 py-2" type="button" id="outputFormatButton"
                                   data-bs-toggle="dropdown" aria-expanded="false">
                                   Output Format
                               </button>
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item active" href="#">.txt</a></li>
-                                  <li><a class="dropdown-item" href="#">.pdf</a></li>
-                                  <li><a class="dropdown-item" href="#">.docs</a></li>
+                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="outputFormatButton">
+                                  <li><a class="dropdown-item active" href="#" onclick="setOutputFormat('.txt')">.txt</a></li>
+                                  <li><a class="dropdown-item" href="#" onclick="setOutputFormat('.pdf')">.pdf</a></li>
+                                  <li><a class="dropdown-item" href="#" onclick="setOutputFormat('.docs')">.docs</a></li>
                                   <li><hr class="dropdown-divider"></li>
                                   <li><a class="dropdown-item" href="#">need help?</a></li>
                               </ul>
@@ -190,13 +191,14 @@
               </div>
               <div class="swiper-slide">
                 <div class="prev-button-container">
-                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-prev">
+                  </div>
               </div>
                   <div class="row gx-2">
-                      <div class="col">
-                          <div class="row">
-                              <div class="col-6 p-3">
-                                  <h4 class="text-center">Image Pre-Processing</h4>
+                              <div class="col p-3  bg-light border-5 border-gray">
+                               
+                                <br><br>
+                                  <p class="m-2">Image Pre-Processing</p>
                                   <label for="threshold" class="form-label">Threshold</label>
                                   <input type="range" class="form-range" id="threshold">
                                   <div class="p-1 mb-2 bg-secondary text-white">Threshold Value</div>
@@ -213,15 +215,13 @@
                                   <button type="button" class="btn btn-outline-success" style="padding:10px; margin-top:20px; ">Detect Characters</button>
                               </div>
   
-                              <div class="col-6 p-3 border-top border-bottom border-end bg-light border-5 border-gray">
+                              <div class="col p-3  bg-light border-5 border-gray" id="preview">
   
                               </div>
                           </div>
-                      </div>
-                  </div>
               </div>
           </div>
-          <div class="swiper-pagination"></div>
+          {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
       </div>
   </div>  
 
@@ -235,6 +235,7 @@
 <script src = "{% static 'assets/js/app/dragdrop.js' %}"></script>
 <script src = "{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{% comment %} <script src = "{% static 'assets/js/main2.js' %}"></script> {% endcomment %}
 <script>
   var swiper = new Swiper('.swiper', {
       // Optional parameters
@@ -259,20 +260,65 @@
     });
 </script>
 <script>
-  function previewFile() {
-    const preview = document.querySelector('#preview');
-    const file = document.querySelector('input[type=file]').files[0];
-    const reader = new FileReader();
-
-    reader.addEventListener("load", function () {
-      // convert image file to base64 string
-      preview.innerHTML = '<img src="' + reader.result + '">';
-    }, false);
-
-    if (file) {
-      reader.readAsDataURL(file);
+    function previewFile() {
+      const preview = document.querySelector('#preview');
+      const file = document.querySelector('input[type=file]').files[0];
+      const reader = new FileReader();
+      var result;
+      reader.addEventListener("load", function () {
+        let img = new Image();
+        img.src = reader.result;
+        result = img.src;
+        img.onload = function() {
+          let canvas = document.createElement('canvas');
+          let ctx = canvas.getContext('2d');
+  
+          // Get the dimensions of the container
+          let rect = preview.getBoundingClientRect();
+          let MAX_WIDTH = rect.width;
+          let MAX_HEIGHT = rect.height;
+  
+          let width = img.width;
+          let height = img.height;
+  
+          // Calculate the scaling factor to keep aspect ratio
+          let scaleFactor = Math.min(MAX_WIDTH / width, MAX_HEIGHT / height);
+  
+          // Check if the image is larger than the maximum dimensions
+          if (scaleFactor < 1) {
+            width *= scaleFactor;
+            height *= scaleFactor;
+          }
+  
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+  
+          let dataurl = canvas.toDataURL(file.type);
+            preview.innerHTML = '<p class=mt-2">Uploaded image from User</p><div><img src="' + dataurl + '"></div>';
+        }
+      }, false);
+  
+      if (file) {
+        reader.readAsDataURL(file);
+      }
     }
-  }
+  </script>
+  <script>
+    let language = '';
+    let outputFormat = '';
+
+    function setLanguage(lang) {
+        language = lang;
+        console.log(language);
+        document.getElementById('languageButton').textContent = language;
+    }
+
+    function setOutputFormat(format) {
+        outputFormat = format;
+        console.log(outputFormat);
+        document.getElementById('outputFormatButton').textContent = outputFormat;
+    }
   </script>
 </body>
 
