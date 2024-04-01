@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -69,14 +70,14 @@
         </div>
     </nav>
     <div class="container-sm max-4">
+        {% comment %} <form method="post" action="{% url 'home' %}" enctype="multipart/form-data"> {% endcomment %}
+        {% csrf_token %}
       <div class="swiper">
           <div class="swiper-wrapper"> <!-- Corrected typo from swiper-wraper to swiper-wrapper -->
               <div class="swiper-slide">
                   <div class="row gx-2">
                       <div class="col p-3  bg-light border-5 border-gray">
                           <div class="dashed_upload">
-                              <form method="post" action="{% url 'home' %}" enctype="multipart/form-data">
-                                  {% csrf_token %}
                                   <div class="drop">
                                       <div class="cont">
                                           <i class="fa fa-cloud-upload"></i>
@@ -91,9 +92,9 @@
                                           </div>
                                       </div>
                                       <output id="list"></output>
+                                       
                                       <input id="files" name="document" type="file" onchange="previewFile()" />
                                   </div>
-                              </form>
                           </div>
                       </div>
                       <div class="col-md-auto p-3 mx-4 bg-light border-5 border-gray">
@@ -136,7 +137,6 @@
               </div>
                   <div class="row gx-2">
                               <div class="col p-3  bg-light border-5 border-gray">
-                               
                                 <br><br>
                                   <p class="m-2">Image Pre-Processing</p>
                                   <label for="threshold" class="form-label">Threshold</label>
@@ -151,99 +151,141 @@
                                   <input type="range" class="form-range" id="dilation">
                                   <div class="p-1 mb-2 bg-secondary text-white">Dilation value</div>
   
-                                  <button type="button" class="btn btn-outline-danger" style="margin-right: 50px; margin-left: 50px; margin-top:20px; padding:10px;">Set Default Value</button>
-                                  <button type="button" class="btn btn-outline-success" style="padding:10px; margin-top:20px; ">Detect Characters</button>
+                                    <button type="button" class="btn btn-outline-danger" style="margin-right: 50px; margin-left: 50px; margin-top:20px; padding:10px;">Set Default Value</button>
+
+                                    <button type="submit" id="detectCharactersButton" class="btn btn-outline-success" style="padding:10px; margin-top:20px;">Detect Characters</button>
                               </div>
-  
                               <div class="col p-3  bg-light border-5 border-gray" id="preview">
-  
+                               
+                              </div>
+                              <div class="col p-3  bg-light border-5 border-gray" id="preview">
+                                <button type="button" id="predict-button"
+                                class="btn btn-outline-danger" style="margin-right: 50px; margin-left: 50px; margin-top:20px; padding:10px;display:none">Predict</button>
+
+                                {% comment %} {% if image_with_roi %}
+                                <p>Detected Character lines</p>
+                                <img src="{{ image_with_roi }}" alt="Image with bounding boxes">
+                            {% endif %}  {% endcomment %}
                               </div>
                           </div>
-              </div>
+                    </div>
           </div>
           {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
       </div>
+    {% comment %} </form> {% endcomment %}
   </div>  
-
+  
 <div id="preview"></div>
 <br><br><br><br><br>
 <!-- home.html -->
 {% if prediction_text %}
     <p>Predicted Text: {{ prediction_text }}</p>
 {% endif %}
+<script src="{% static 'assets/js/app/dragdrop.js' %}"></script>
+<script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{% comment %} <script src="{% static 'assets/js/main2.js' %}"></script> {% endcomment %}
+
+
+<div id="preview"></div>
+<br><br><br><br><br>
+<!-- home.html -->
+{% comment %} {% if prediction_text %}
+    <p>Predicted Text: {{ prediction_text }}</p>
+{% endif %} {% endcomment %}
 <script src = "{% static 'assets/js/app/dragdrop.js' %}"></script>
 <script src = "{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 {% comment %} <script src = "{% static 'assets/js/main2.js' %}"></script> {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-  var swiper = new Swiper('.swiper', {
-      // Optional parameters
-      direction: 'horizontal',
-      loop: true,
+    var swiper = new Swiper('.swiper', {
+        direction: 'horizontal',
+        loop: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
 
-      // Navigation arrows
-      navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-      },
-
-      // Pagination
-      pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-      },
-  });
-  //Add event listener to the "Next" button to move to the next slide
     document.getElementById('nextButton').addEventListener('click', function() {
         swiper.slideNext();
     });
-</script>
-<script>
+
+    /*document.getElementById('prevButton').addEventListener('click', function() {
+        swiper.slidePrev();
+    });*/
+
     function previewFile() {
-      const preview = document.querySelector('#preview');
-      const file = document.querySelector('input[type=file]').files[0];
-      const reader = new FileReader();
-      var result;
-      reader.addEventListener("load", function () {
-        let img = new Image();
-        img.src = reader.result;
-        result = img.src;
-        img.onload = function() {
-          let canvas = document.createElement('canvas');
-          let ctx = canvas.getContext('2d');
-  
-          // Get the dimensions of the container
-          let rect = preview.getBoundingClientRect();
-          let MAX_WIDTH = rect.width;
-          let MAX_HEIGHT = rect.height;
-  
-          let width = img.width;
-          let height = img.height;
-  
-          // Calculate the scaling factor to keep aspect ratio
-          let scaleFactor = Math.min(MAX_WIDTH / width, MAX_HEIGHT / height);
-  
-          // Check if the image is larger than the maximum dimensions
-          if (scaleFactor < 1) {
-            width *= scaleFactor;
-            height *= scaleFactor;
-          }
-  
-          canvas.width = width;
-          canvas.height = height;
-          ctx.drawImage(img, 0, 0, width, height);
-  
-          let dataurl = canvas.toDataURL(file.type);
-            preview.innerHTML = '<p class=mt-2">Uploaded image from User</p><div><img src="' + dataurl + '"></div>';
+        const preview = document.querySelector('#preview');
+        const file = document.querySelector('input[type=file]').files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            let img = new Image();
+            img.src = reader.result;
+            img.onload = function() {
+                let canvas = document.createElement('canvas');
+                let ctx = canvas.getContext('2d');
+
+                let rect = preview.getBoundingClientRect();
+                let MAX_WIDTH = rect.width;
+                let MAX_HEIGHT = rect.height;
+
+                let width = img.width;
+                let height = img.height;
+
+                let scaleFactor = Math.min(MAX_WIDTH / width, MAX_HEIGHT / height);
+
+                if (scaleFactor < 1) {
+                    width *= scaleFactor;
+                    height *= scaleFactor;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+
+                let dataurl = canvas.toDataURL(file.type);
+                preview.innerHTML = '<p class="mt-2">Uploaded image from User</p><div><img src="' + dataurl + '"></div>';
+            }
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
         }
-      }, false);
-  
-      if (file) {
-        reader.readAsDataURL(file);
-      }
     }
-  </script>
-  <script>
+
+    document.getElementById('detectCharactersButton').addEventListener('click', function(event) {
+        console.log('Detecting characters');
+        var fileInput = document.querySelector('#files');
+        var file = fileInput.files[0];
+        var formData = new FormData();
+        formData.append('document', file);
+
+        fetch('http://127.0.0.1:8000/app/api/document/', {
+            method: 'POST',
+            headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: formData
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            let preview = document.getElementById('preview');
+            let objectURL = URL.createObjectURL(blob);
+            preview.innerHTML = '<p>Detected Character lines</p><img src="' + objectURL + '">';
+            document.getElementById('predict-button').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
     let language = '';
     let outputFormat = '';
 
@@ -258,7 +300,8 @@
         console.log(outputFormat);
         document.getElementById('outputFormatButton').textContent = outputFormat;
     }
-  </script>
+</script>
+
 </body>
 
 </html>
