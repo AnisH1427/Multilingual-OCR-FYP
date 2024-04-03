@@ -11,9 +11,9 @@ Maybe you can mention me or this repo in the acknowledgements too
   <img src="assets/logo.png" alt="logo" width="200" height="auto" />
   <h1>Final Year Project</h1>
   
-  <p>
-    An awesome README template for your projects! 
-  </p>
+  <h3>
+    Multilingual OCR (Optical Character Recognition)
+  </h3>
   
   
 <!-- Badges -->
