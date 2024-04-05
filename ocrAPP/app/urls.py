@@ -8,4 +8,5 @@ router.register(r'document', views.DocumentViewSet)
 urlpatterns = [
     path('home/', views.home, name='home'),
     path('api/',include(router.urls)),
+    path('api/predict/',views.PredictView.as_view(),name='predict'),
 ]

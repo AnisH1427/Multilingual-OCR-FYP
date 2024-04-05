@@ -11,17 +11,47 @@ class ImageToWordModel(OnnxInferenceModel):
         self.vocab = vocab
 
     def predict(self, image: np.ndarray):
-        # Resize the image to the expected dimensions
+        
         image = cv2.resize(image, (1408, 96))
-
+        
         # Ensure the image has 3 color channels
         if image.ndim == 2:
             image = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
         elif image.shape[2] == 4:
             image = cv2.cvtColor(image, cv2.COLOR_RGBA2RGB)
+            
+        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        # ret,thresh = cv2.threshold(gray,127,255,cv2.THRESH_BINARY_INV)
+        # kernel = np.ones((5,200), np.uint8)
+        # img_dilation = cv2.dilate(thresh, kernel, iterations=1)
 
-        # Add an extra dimension for the batch size
+         # Find contours
+        # contours, hierarchy = cv2.findContours(img_dilation.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        
+        # Sort contours based on their bounding box coordinates
+        # bounding_boxes = [cv2.boundingRect(ctr) for ctr in contours]
+        # sorted_contours = [ctr for _, ctr in sorted(zip(bounding_boxes, contours), key=lambda pair: pair[0][1])]
+        
+         # Create a list to store predicted texts
+        # predicted_texts = []
+        
+        # # Add an extra dimension for the batch size
         image_pred = np.expand_dims(image, axis=0).astype(np.float32)
+        
+        # #loop over sorted contours
+        # for i, ctr in enumerate(sorted_contours):
+        #     # Get bounding box
+        #     x, y, w, h = cv2.boundingRect(ctr)
+
+        #     # Getting ROI
+        #     roi = image[y:y+h, x:x+w]
+        #     roi_row = roi.shape[0]
+        #     roi_col = roi.shape[1]
+
+        #     # Show ROI
+        #     if(roi_row>3000 or roi_row<=20 or roi_row<=10 or roi_col<=110):
+        #         continue
+            
 
         preds = self.model.run(None, {self.input_name: image_pred})[0]
         text = ctc_decoder(preds, self.vocab)[0]

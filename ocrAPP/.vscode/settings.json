@@ -1,0 +1,10 @@
+{
+    "workbench.preferredHighContrastColorTheme": "Visual Studio 2019 Dark",
+    "workbench.colorTheme": "Visual Studio 2019 Dark",
+    "workbench.preferredDarkColorTheme": "Visual Studio 2019 Dark",
+    "workbench.preferredHighContrastLightColorTheme": "Visual Studio 2019 Dark",
+    "workbench.preferredLightColorTheme": "Visual Studio 2019 Dark",
+    "workbench.iconTheme": "material-icon-theme",
+    "material-icon-theme.activeIconPack": "none",
+    "workbench.productIconTheme": "Default"
+}
