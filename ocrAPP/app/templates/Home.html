@@ -12,17 +12,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
 <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome-all.min.css' %}">
 <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
-{% comment %} <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome5-overrides.min.css' %}"> {% endcomment %}
-<link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}">
-<link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}">
-<link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}">
-<link rel="stylesheet" href="{% static 'assets/css/Clients-Slider.css' %}">
+<link rel="stylesheet" href="{% static 'assets/fonts/fontawesome5-overrides.min.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}"> {% endcomment %}
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}"> {% endcomment %}
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}"> {% endcomment %}
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Clients-Slider.css' %}"> {% endcomment %}
 <link rel="stylesheet" href="{% static 'assets/css/Drag--Drop-Upload-Form.css' %}">
-<link rel="stylesheet" href="{% static 'assets/css/Login-Box-En-login-box-en.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Login-Box-En-login-box-en.css' %}"> {% endcomment %}
 <link rel="stylesheet" href="{% static 'assets/css/Login-Page-B5.css' %}">
-<link rel="stylesheet" href="{% static 'assets/css/Login-with-overlay-image.css' %}">
-<link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}">
-<link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Login-with-overlay-image.css' %}"> {% endcomment %}
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}"> {% endcomment %}
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}"> {% endcomment %}
+
 <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <!-- ... -->
@@ -52,24 +53,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md bg-body py-3">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bezier">
-                       
-                    </svg></span><span>Intelligent Reader</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="btn-group" role="group"></div>
-            <div class="collapse navbar-collapse" id="navcol-2">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Second Item</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                </ul>
-                <div class="btn-group" role="group"></div><a class="btn btn-primary ms-md-2" role="button" href="#"><i class="far fa-user"></i></a>
-            </div>
-        </div>
-    </nav>
-    <div class="container-sm max-4">
+    {% include 'navbar.html' %}
+    <div class="container-sm max-4 p-3 m-4">
         {% comment %} <form method="post" action="{% url 'home' %}" enctype="multipart/form-data"> {% endcomment %}
         {% csrf_token %}
       <div class="swiper">
@@ -205,8 +190,8 @@
                                         <img class="rounded-circle shadow-1-strong me-3"
                                           src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
                                           height="40" />
-                                        <div class="form-outline w-100">
-                                          <textarea class="form-control" id="textAreaExample" rows="4"
+                                        <div class="form-outline w-100 h-10">
+                                          <textarea class="form-control" id="textAreaExample" rows="2"
                                             style="background: #fff;"></textarea>
                                           <label class="form-label" for="textAreaExample">Any Feedback?</label>
                                         </div>
@@ -249,7 +234,8 @@
     <p>Predicted Text: {{ prediction_text }}</p>
 {% endif %} {% endcomment %}
 <script src = "{% static 'assets/js/app/dragdrop.js' %}"></script>
-<script src = "{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+{% comment %} <script src = "{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script> {% endcomment %}
+{% comment %} <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script> {% endcomment %}
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 {% comment %} <script src = "{% static 'assets/js/main2.js' %}"></script> {% endcomment %}
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
