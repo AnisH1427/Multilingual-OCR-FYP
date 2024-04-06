@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -11,7 +12,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
 <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome-all.min.css' %}">
 <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
-<link rel="stylesheet" href="{% static 'assets/fonts/fontawesome5-overrides.min.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome5-overrides.min.css' %}"> {% endcomment %}
 <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}">
 <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}">
 <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}">
@@ -23,6 +24,7 @@
 <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}">
 <link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}">
 <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <!-- ... -->
     <style>
       .navbar {
@@ -33,7 +35,19 @@
       .dashed_upload {
           z-index: 1; /* any number smaller than the z-index of .navbar */
           position: relative; /* required for z-index to take effect */
+        }
+
+        .prev-button-container {
+          position: absolute;
+          top:10px; /* Adjust this value to move the button down */
+          left: 20px; /* Adjust this value to position the button horizontally */
+          width: 30px; /* Adjust width as needed */
+          height: 30px; /* Adjust height as needed */
+          /* Change cursor to pointer on hover */
       }
+  
+      /* Hide default arrow */
+     
       </style>
 </head>
 
@@ -55,53 +69,333 @@
             </div>
         </div>
     </nav>
-<div class="dashed_upload"><div class="wrapper">
-  <form method="post" action="{% url 'home' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="drop">
-      <div class="cont">
-        <i class="fa fa-cloud-upload"></i>
-        <div class="tit">
-          Drag & Drop
-        </div>
-        <div class="desc">
-          or 
-        </div>
-        <div class="browse">
-          click here to browse
-        </div>
+    <div class="container-sm max-4">
+        {% comment %} <form method="post" action="{% url 'home' %}" enctype="multipart/form-data"> {% endcomment %}
+        {% csrf_token %}
+      <div class="swiper">
+          <div class="swiper-wrapper"> <!-- Corrected typo from swiper-wraper to swiper-wrapper -->
+              <div class="swiper-slide">
+                  <div class="row gx-2">
+                      <div class="col p-3  bg-light border-5 border-gray">
+                          <div class="dashed_upload">
+                                  <div class="drop">
+                                      <div class="cont">
+                                          <i class="fa fa-cloud-upload"></i>
+                                          <div class="tit">
+                                              Drag & Drop
+                                          </div>
+                                          <div class="desc">
+                                              or
+                                          </div>
+                                          <div class="browse">
+                                              click here to browse
+                                          </div>
+                                      </div>
+                                      <output id="list"></output>
+                                       
+                                      <input id="files" name="document" type="file" onchange="previewFile()" />
+                                  </div>
+                          </div>
+                      </div>
+                      <div class="col-md-auto p-3 mx-4 bg-light border-5 border-gray">
+                        <h4>Select the document language</h4>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle px-2 py-2" type="button" id="languageButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Language
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="languageButton">
+                                  <li><a class="dropdown-item active" href="#" onclick="setLanguage('English')">English</a></li>
+                                  <li><a class="dropdown-item" href="#" onclick="setLanguage('Hindi')">Hindi</a></li>
+                                  <li><a class="dropdown-item" href="#" onclick="setLanguage('Nepali')">Nepali</a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li><a class="dropdown-item" href="#">need help?</a></li>
+                              </ul>
+                          </div>
+                          <h4>Choose the output format
+                          <div class="dropdown">
+                              <button class="btn btn-secondary dropdown-toggle px-3 py-2" type="button" id="outputFormatButton"
+                                  data-bs-toggle="dropdown" aria-expanded="false">
+                                  Output Format
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="outputFormatButton">
+                                  <li><a class="dropdown-item active" href="#" onclick="setOutputFormat('.txt')">.txt</a></li>
+                                  <li><a class="dropdown-item" href="#" onclick="setOutputFormat('.pdf')">.pdf</a></li>
+                                  <li><a class="dropdown-item" href="#" onclick="setOutputFormat('.docs')">.docs</a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li><a class="dropdown-item" href="#">need help?</a></li>
+                              </ul>
+                          </div>
+                          <button id="nextButton" class="btn btn-primary">Next</button>
+                      </div>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="prev-button-container">
+                  <div class="swiper-button-prev">
+                  </div>
+              </div>
+                  <div class="row gx-2">
+                              <div class="col p-3  bg-light border-5 border-gray">
+                                <br><br>
+                                  <p class="m-2">Image Pre-Processing</p>
+                                  <label for="threshold" class="form-label">Threshold</label>
+                                  <input type="range" class="form-range" id="threshold">
+                                  <div class="p-1 mb-2 bg-secondary text-white">Threshold Value</div>
+  
+                                  <label for="binarization" class="form-label">Binarization</label>
+                                  <input type="range" class="form-range" id="binarization">
+                                  <div class="p-1 mb-2 bg-secondary text-white">Binary value</div>
+  
+                                  <label for="dilation" class="form-label">Dilation</label>
+                                  <input type="range" class="form-range" id="dilation">
+                                  <div class="p-1 mb-2 bg-secondary text-white">Dilation value</div>
+
+                                    <button type="button" class="btn btn-outline-success">Set Default Value</button>
+
+                                    <button type="submit" id="detectCharactersButton" class="btn btn-outline-success" >Detect Characters</button>
+                              </div>
+                              <div class="col p-3  bg-light border-5 border-gray" id="preview">
+                               
+                              </div>
+                              <div class="col p-3  bg-light border-5 border-gray" id="preview">
+                                <p>Predict the text</p>
+                                <button type="button" id="predict-button"
+                                class="btn btn-primary" style="display:none">Predict</button>
+                                
+                                <div class="card" style="display:none">
+                                    <div class="card-body">
+                                      <div class="d-flex flex-start align-items-center">
+                                        <img class="rounded-circle shadow-1-strong me-3"
+                                          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
+                                          height="60" />
+                                        <div>
+                                          <h6 class="fw-bold text-primary mb-1">
+                                            Intelligent Reader.ai
+                                          </h6>
+                                          <p class="text-muted small mb-0">
+                                            Shared publicly - Jan 2020
+                                          </p>
+                                        </div>
+                                      </div>
+                          
+                                      <div id="predicted-text">
+                                        {% for prediction in final_predictions %}
+                                            {{ prediction }}
+                                        {% endfor %}
+                                      </div>
+                          
+                                      <div class="small d-flex justify-content-start">
+                                        <a href="#!" class="d-flex align-items-center me-3">
+                                          <i class="far fa-thumbs-up me-2"></i>
+                                          <p class="mb-0">Like</p>
+                                        </a>
+                                        <a href="#!" class="d-flex align-items-center me-3">
+                                          <i class="far fa-comment-dots me-2"></i>
+                                          <p class="mb-0">Comment</p>
+                                        </a>
+                                        <a href="#!" class="d-flex align-items-center me-3">
+                                          <i class="fas fa-share me-2"></i>
+                                          <p class="mb-0">Share</p>
+                                        </a>
+                                      </div>
+                                    </div>
+                                    <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                                      <div class="d-flex flex-start w-100">
+                                        <img class="rounded-circle shadow-1-strong me-3"
+                                          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+                                          height="40" />
+                                        <div class="form-outline w-100">
+                                          <textarea class="form-control" id="textAreaExample" rows="4"
+                                            style="background: #fff;"></textarea>
+                                          <label class="form-label" for="textAreaExample">Any Feedback?</label>
+                                        </div>
+                                      </div>
+                                      <div class="float-end mt-2 pt-1">
+                                        <button type="button" class="btn btn-primary btn-sm">
+                                          Send Feedback
+                                        </button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm">
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>
+          </div>
+          {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
       </div>
-     
-      <output id="list"></output>
-      <input id="files" name="document" type="file" onchange="previewFile()"/>
-    </div>
-    <button type="submit" style="margin-top: 20px; margin-right: 10px; float: right;">Upload</button>
-    <div id="preview"></div>
-</form>
-</div>
+    {% comment %} </form> {% endcomment %}
+  </div>  
+  
 <div id="preview"></div>
 <br><br><br><br><br>
 <!-- home.html -->
 {% if prediction_text %}
     <p>Predicted Text: {{ prediction_text }}</p>
 {% endif %}
+<script src="{% static 'assets/js/app/dragdrop.js' %}"></script>
+<script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{% comment %} <script src="{% static 'assets/js/main2.js' %}"></script> {% endcomment %}
+
+
+<div id="preview"></div>
+<br><br><br><br><br>
+<!-- home.html -->
+{% comment %} {% if prediction_text %}
+    <p>Predicted Text: {{ prediction_text }}</p>
+{% endif %} {% endcomment %}
 <script src = "{% static 'assets/js/app/dragdrop.js' %}"></script>
+<script src = "{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{% comment %} <script src = "{% static 'assets/js/main2.js' %}"></script> {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-  function previewFile() {
-    const preview = document.querySelector('#preview');
-    const file = document.querySelector('input[type=file]').files[0];
-    const reader = new FileReader();
+    var swiper = new Swiper('.swiper', {
+        direction: 'horizontal',
+        loop: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
 
-    reader.addEventListener("load", function () {
-      // convert image file to base64 string
-      preview.innerHTML = '<img src="' + reader.result + '">';
-    }, false);
+    document.getElementById('nextButton').addEventListener('click', function() {
+        swiper.slideNext();
+    });
 
-    if (file) {
-      reader.readAsDataURL(file);
+    /*document.getElementById('prevButton').addEventListener('click', function() {
+        swiper.slidePrev();
+    });*/
+
+    function previewFile() {
+        const preview = document.querySelector('#preview');
+        const file = document.querySelector('input[type=file]').files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            let img = new Image();
+            img.src = reader.result;
+            img.onload = function() {
+                let canvas = document.createElement('canvas');
+                let ctx = canvas.getContext('2d');
+
+                let rect = preview.getBoundingClientRect();
+                let MAX_WIDTH = rect.width;
+                let MAX_HEIGHT = rect.height;
+
+                let width = img.width+50;
+                let height = img.height-50;
+
+                let scaleFactor = Math.min(MAX_WIDTH / width, MAX_HEIGHT / height);
+
+                if (scaleFactor < 1) {
+                    width *= scaleFactor;
+                    height *= scaleFactor;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+
+                let dataurl = canvas.toDataURL(file.type);
+                preview.innerHTML = '<p class="mt-2">Uploaded image from User</p><div><img src="' + dataurl + '"></div>';
+            }
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     }
-  }
-  </script>
+
+    document.getElementById('detectCharactersButton').addEventListener('click', function(event) {
+        console.log('Detecting characters');
+        var fileInput = document.querySelector('#files');
+        var file = fileInput.files[0];
+        var formData = new FormData();
+        formData.append('document', file);
+
+        fetch('http://127.0.0.1:8000/app/api/document/', {
+            method: 'POST',
+            headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: formData
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            let preview = document.getElementById('preview');
+            let objectURL = URL.createObjectURL(blob);
+            preview.innerHTML = '<p>Detected Character lines</p><img src="' + objectURL + '">';
+            document.getElementById('predict-button').style.display = 'block';
+            document.querySelector('.card').style.display = 'block';
+            document.getElementById('predicted-text').innerHTML='<h3 style="color:green">Predicted Text Will Appear Here</h3>';
+           
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+    document.getElementById('predict-button').addEventListener('click', function(event) {
+      console.log('Predicting');
+      var file = document.querySelector('input[type=file]').files[0];  // Get the original file
+      var formData = new FormData();
+      formData.append('document', file);
+  
+      fetch('http://127.0.0.1:8000/app/api/predict/', {
+          method: 'POST',
+          headers: {
+          'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: formData }).then(response => response.text())
+      .then(data => {
+        console.log(data);
+// Handle the final_predictions here
+var final_predictions = JSON.parse(data);  // Parse the data as JSON
+
+var predictedElement = document.getElementById('predicted-text');
+predictedElement.innerHTML = '';
+ // Add the style dynamically
+ predictedElement.style.whiteSpace = 'pre';
+ predictedElement.style.width = '300px';
+ predictedElement.style.height = '300px';
+ predictedElement.style.overflow = 'auto';
+ predictedElement.style.style = 'regular';
+var i = 0;
+function typeWriter() {
+    if (i < final_predictions.length) {
+        predictedElement.innerHTML += final_predictions[i] + '<br>';
+        i++;
+        setTimeout(typeWriter, 200);  // Adjust the speed of the typing effect here
+    }
+}
+typeWriter();
+})
+.catch(error => console.error('Error:', error.message));
+  });
+    let language = '';
+    let outputFormat = '';
+
+    function setLanguage(lang) {
+        language = lang;
+        console.log(language);
+        document.getElementById('languageButton').textContent = language;
+    }
+
+    function setOutputFormat(format) {
+        outputFormat = format;
+        console.log(outputFormat);
+        document.getElementById('outputFormatButton').textContent = outputFormat;
+    }
+</script>
+
 </body>
 
 </html>
