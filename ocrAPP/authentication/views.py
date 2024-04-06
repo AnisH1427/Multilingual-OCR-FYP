@@ -10,6 +10,9 @@ from rest_framework.authtoken.models import Token
 from django.shortcuts import redirect
 import requests
 from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError
+from rest_framework import generics
+from .serializers import RegisterSerializer
 
 # Create your views here.
 def home(request):
@@ -18,9 +21,6 @@ def home(request):
 def loginpage(request):
     return render(request,'login.html')
 
-from django.core.exceptions import ValidationError
-from rest_framework import generics
-from .serializers import RegisterSerializer
 
 class CustomRegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
