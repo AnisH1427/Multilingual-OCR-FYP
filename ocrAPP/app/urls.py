@@ -10,4 +10,6 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('api/',include(router.urls)),
     path('api/predict/',views.PredictView.as_view(),name='predict'),
+    path('user-update/', views.UserUpdateView.as_view(), name='user_update'),
 ]
+

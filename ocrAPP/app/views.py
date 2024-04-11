@@ -110,13 +110,49 @@ class PredictView(APIView):
         # Return the predictions as a JSON response
         return JsonResponse(final_predictions, safe=False)
             
-@login_required(login_url='login_with_token/')
+@login_required(login_url='/login/')
 def home(request):
     return render(request, 'home.html')
 
+@login_required(login_url='/login/')
 def profile(request):
     user = request.user
     context = {
         'user': user
     }
     return render(request, 'profile.html',context)
+
+
+from rest_framework import permissions
+from rest_framework.generics import UpdateAPIView
+from dj_rest_auth.registration.views import RegisterView
+from dj_rest_auth.serializers import UserDetailsSerializer
+from django.contrib.auth import get_user_model
+from authentication.models import CustomUser
+from rest_framework import serializers
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from rest_framework.authtoken.models import Token
+import requests
+
+User = get_user_model()
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'gender']
+
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            if getattr(instance, attr) != value:
+                setattr(instance, attr, value)
+        instance.save()
+        return instance
+    
+class UserUpdateView(UpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
