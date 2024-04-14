@@ -156,8 +156,8 @@
                   <hr>
                   <form>
                     <div class="form-group">
-                      <label class="d-block">Two Factor Authentication</label>
-                      <button class="btn btn-info" type="button">Enable two-factor authentication</button>
+                      <label class="d-block">Two Factor Security</label>
+                      <button class="btn btn-info" type="button">Enable two-factor Security</button>
                       <p class="small text-muted mt-2">Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to log in.</p>
                     </div>
                   </form>
@@ -169,7 +169,7 @@
                       <ul class="list-group list-group-sm">
                         <li class="list-group-item has-icon">
                           <div>
-                            <h6 class="mb-0">San Francisco City 190.24.335.55</h6>
+                            <h6 class="mb-0">Kathmandu, Nepal 190.24.335.55</h6>
                             <small class="text-muted">Your current session seen in United States</small>
                           </div>
                           <button class="btn btn-light btn-sm ml-auto" type="button">More info</button>
@@ -277,6 +277,7 @@
 
         // compare the initial form data with the current form data
         if (JSON.stringify([...initialFormData]) === JSON.stringify([...currentFormData])) {
+          
         // display a message to the user
         Swal.fire({
             title: "No changes!",
@@ -286,6 +287,9 @@
         
     } 
     else{
+        // update the initial form data
+        initialFormData = new FormData(this);
+
         fetch('http://localhost:8000/app/user-update/', {
             method: 'PATCH',
             headers: {
