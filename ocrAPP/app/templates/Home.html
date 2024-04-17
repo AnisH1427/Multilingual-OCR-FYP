@@ -238,6 +238,7 @@
 {% comment %} <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script> {% endcomment %}
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 {% comment %} <script src = "{% static 'assets/js/main2.js' %}"></script> {% endcomment %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     var swiper = new Swiper('.swiper', {
@@ -260,6 +261,21 @@
     /*document.getElementById('prevButton').addEventListener('click', function() {
         swiper.slidePrev();
     });*/
+
+    let language = '';
+    let outputFormat = '';
+  
+      function setLanguage(lang) {
+          language = lang;
+          console.log(language);
+          document.getElementById('languageButton').textContent = language;
+      }
+  
+      function setOutputFormat(format) {
+          outputFormat = format;
+          console.log(outputFormat);
+          document.getElementById('outputFormatButton').textContent = outputFormat;
+      }
 
     function previewFile() {
         const preview = document.querySelector('#preview');
@@ -330,11 +346,39 @@
         });
     });
     document.getElementById('predict-button').addEventListener('click', function(event) {
+      event.preventDefault();
+      if(!language || !outputFormat){
+        if(language && !outputFormat){
+          text = 'Please select the output format first!';
+        } else if(!language && outputFormat){
+          text = 'Please select the language first!';
+        } else {
+          text = 'Please select the language and output format first!';
+        }
+        // Inject style tag into head
+        var style = document.createElement('style');
+        style.innerHTML = `
+        .swal2-popup {
+            font-size: 1.1em !important; /* Change font size */
+            width: 25em !important; /* Change width */
+        }`;
+        document.head.appendChild(style);
+
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'error',
+          title: 'Oops...',
+          text: text,
+          timer: 3000
+        });
+        return;
+      }
       console.log('Predicting');
       var file = document.querySelector('input[type=file]').files[0];  // Get the original file
       var formData = new FormData();
       formData.append('document', file);
-  
+      formData.append('language', language);
+      
       fetch('http://127.0.0.1:8000/app/api/predict/', {
           method: 'POST',
           headers: {
@@ -366,20 +410,7 @@ typeWriter();
 })
 .catch(error => console.error('Error:', error.message));
   });
-    let language = '';
-    let outputFormat = '';
 
-    function setLanguage(lang) {
-        language = lang;
-        console.log(language);
-        document.getElementById('languageButton').textContent = language;
-    }
-
-    function setOutputFormat(format) {
-        outputFormat = format;
-        console.log(outputFormat);
-        document.getElementById('outputFormatButton').textContent = outputFormat;
-    }
 </script>
 
 </body>

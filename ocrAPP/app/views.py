@@ -55,9 +55,23 @@ class PredictView(APIView):
             return Response({'error': 'No document file provided'}, status=400)
         uploaded_file = request.FILES['document']
         
+         # Get the language from the request data
+        language = request.data.get('language')
+        
+        if not language:
+            return Response({'error': 'No language provided'}, status=400)
+        
+        # Select the model based on the language
+        if language == 'English':
+            configs = BaseModelConfigs.load("Model/202403031722/configs.yaml")
+        elif language == 'Hindi' or language == 'Nepali':
+            configs = BaseModelConfigs.load("Model/Devanagari/202404140605/configs.yaml")
+        else:
+            return Response({'error': 'Invalid language'}, status=400)
+        
         image = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
 
-        configs = BaseModelConfigs.load("Model/202403031722/configs.yaml")
+        # configs = BaseModelConfigs.load("Model/202403031722/configs.yaml")
 
         model = ImageToWordModel(model_path=configs.model_path, vocab=configs.vocab)
         
