@@ -125,13 +125,14 @@ body{
   width:100%;
 } 
 
-.collapse a:hover,
+/* .collapse a:hover,
 .collapse .active > a, 
-.collapse li:hover > a{
+.collapse li:hover > a
+{
   color: #ffffff;
-}
+} */
 
-.get-started-btn{
+/* .get-started-btn{
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-size: 14px;
@@ -145,11 +146,11 @@ body{
   text-transform: uppercase;
   border: 2px solid aqua;
   color: #ffffff;
-}
-.get-started-btn:hover{
+} */
+/* .get-started-btn:hover{
   background-color: #71e215;
   color: #ffffff;
-}
+} */
 
 @media(max-width: 768px){
   .get-started-btn{
