@@ -18,9 +18,9 @@ Maybe you can mention me or this repo in the acknowledgements too
   
 <!-- Badges -->
 <p>
-  <a href="https://github.com/AnisH1427/Multilingual-OCR-FYP/contributors">
-    <img src="https://github.com/AnisH1427/Multilingual-OCR-FYP/awesome-readme-template" alt="contributors" />
-  </a>
+<!--   <a href="https://github.com/AnisH1427/Multilingual-OCR-FYP/contributors"> -->
+<!--     <img src="https://github.com/AnisH1427/Multilingual-OCR-FYP/awesome-readme-template" alt="contributors" /> -->
+<!--   </a> -->
   <a href="">
     <img src="https://img.shields.io/github/last-commit/AnisH1427/awesome-readme-template" alt="last update" />
   </a>
