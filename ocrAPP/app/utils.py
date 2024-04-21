@@ -57,7 +57,7 @@ class ImageToWordModel(OnnxInferenceModel):
         text = ctc_decoder(preds, self.vocab)[0]
         return text
     
-def detect_english_contours(image):
+def detect_contours(image,language="English"):
     color_image = image.copy()
     
     # Check the number of channels in the image

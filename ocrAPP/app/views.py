@@ -1,7 +1,7 @@
 # views.py
 from django.shortcuts import render
 from .utils import ImageToWordModel
-from .utils import detect_english_contours
+from .utils import detect_contours
 import cv2
 import numpy as np
 from django.contrib.auth.decorators import login_required
@@ -29,7 +29,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
                 return Response({'detail': 'Invalid image'}, status=status.HTTP_400_BAD_REQUEST)
             
             # Use the detect_english_contours function to detect contours and draw rectangles on the image
-            image = detect_english_contours(image)
+            image = detect_contours(image)
             
             # Convert the image to PIL format
             pil_image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
@@ -63,7 +63,7 @@ class PredictView(APIView):
         
         # Select the model based on the language
         if language == 'English':
-            configs = BaseModelConfigs.load("Model/202403031722/configs.yaml")
+            configs = BaseModelConfigs.load("Model/202404021423/configs.yaml")
         elif language == 'Hindi' or language == 'Nepali':
             configs = BaseModelConfigs.load("Model/Devanagari/202404140605/configs.yaml")
         else:
