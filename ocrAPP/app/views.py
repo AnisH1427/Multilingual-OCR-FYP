@@ -65,7 +65,7 @@ class PredictView(APIView):
         if language == 'English':
             configs = BaseModelConfigs.load("Model/202404021423/configs.yaml")
         elif language == 'Hindi' or language == 'Nepali':
-            configs = BaseModelConfigs.load("Model/Devanagari/202404140605/configs.yaml")
+            configs = BaseModelConfigs.load("Model/Devanagari/202404190616/configs.yaml")
         else:
             return Response({'error': 'Invalid language'}, status=400)
         
