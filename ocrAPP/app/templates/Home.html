@@ -26,6 +26,7 @@
 
 <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<link href="https://media-library.cloudinary.com/global/all.css" rel="stylesheet">
 <!-- ... -->
     <style>
       .navbar {
@@ -111,6 +112,8 @@
                                   <li><a class="dropdown-item" href="#">need help?</a></li>
                               </ul>
                           </div>
+                          <button id="upload_widget" class="cloudinary-button">Upload files</button> 
+
                           <button id="nextButton" class="btn btn-primary">Next</button>
                       </div>
                   </div>
@@ -240,6 +243,59 @@
 {% comment %} <script src = "{% static 'assets/js/main2.js' %}"></script> {% endcomment %}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+{% comment %} <script src="https://media-library.cloudinary.com/global/all.js"></script> {% endcomment %}
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+
+<script>
+  var myWidget = cloudinary.createUploadWidget({
+    cloudName: 'drvwg9jwn', 
+    apiKey: '423176976473914',
+    cropping: 'server',
+    showAdvancedOptions: true,
+    croppingAspectRatio: null,
+    sources: ['local', 'url', 'camera', 'image_search'],
+    googleApiKey: 'AIzaSyA1_8PjT6xGgxoOTaxWg-ATtmSOKLbWBNM',
+    showCompletedButton: true,
+    croppingShowDimensions: true,
+    multiple: false,
+    defaultSource: 'local',
+    styles: {
+      palette: {
+        window: '#FFFFFF',
+        sourceBg: '#FFFFFF',
+        windowBorder: '#90A0B3',
+        tabIcon: '#0094C7',
+        inactiveTabIcon: '#69778A',
+        menuIcons: '#0094C7',
+        link: '#53ad9d',
+        action: '#8F5DA5',
+        inProgress: '#0194c7',
+        complete: '#53ad9d',
+        error: '#c43737',
+        textDark: '#000000',
+        textLight: '#FFFFFF'
+      },
+      fonts: {
+        default: null,
+        "'Space Mono', monospace": {
+          url: 'https://fonts.googleapis.com/css?family=Space+Mono',
+          active: true
+        }
+      },
+      widgetWidth: '500px',
+      widgetHeight: '500px'
+    }
+  }, (error, result) => { 
+    if (!error && result && result.event === "success") { 
+      console.log('Done! Here is the image info: ', result.info); 
+    }
+  })
+
+  document.getElementById("upload_widget").addEventListener("click", function(){
+      myWidget.open();
+  }, false);
+</script>
+
 <script>
     var swiper = new Swiper('.swiper', {
         direction: 'horizontal',
@@ -276,7 +332,7 @@
           console.log(outputFormat);
           document.getElementById('outputFormatButton').textContent = outputFormat;
       }
-
+    
     function previewFile() {
         const preview = document.querySelector('#preview');
         const file = document.querySelector('input[type=file]').files[0];
