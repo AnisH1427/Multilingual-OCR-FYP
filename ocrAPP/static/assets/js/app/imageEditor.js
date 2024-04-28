@@ -2,7 +2,7 @@
 const cloudName = "drvwg9jwn";
 const uploadPreset = "arudwidn";
 let imageId = "sample";
-const uploadedImage = document.getElementById("uploadedImage");
+const uploadedImage = document.getElementById("uploadedimage");
 const myWidget = cloudinary.createUploadWidget(
     {
         cloudName:cloudName,
@@ -13,7 +13,9 @@ const myWidget = cloudinary.createUploadWidget(
             console.log("Done! Here is the image info: ",result.info);
             imageId = result.info.public_id;
             uploadedImage.setAttribute("src",result.info.secure_url);
-            uploadedImage.style.width = "100%";
+            uploadedImage.style.width = "200%";
+            uploadedImage.style.height = "100%";
+            uploadedImage.style.objectFit = "contain";
         }
     }
 )
@@ -60,8 +62,14 @@ function editImage(){
 });
 myEditor.show();
 myEditor.on("export", function(data){
-    console.log("Exported",data);
-})
+  console.log("Exported", data);
+
+  // Get the URL of the edited image
+  const url = data.assets[0].secureUrl;
+
+  // Update the 'src' attribute of the 'uploadedimage' element with the URL of the edited image
+  document.getElementById("uploadedimage").setAttribute("src", url);
+});
 }
 /* <script>
   var myWidget = cloudinary.createUploadWidget({

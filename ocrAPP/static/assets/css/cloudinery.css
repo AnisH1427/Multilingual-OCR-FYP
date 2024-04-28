@@ -4,9 +4,9 @@
     height: 400px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     /* border-radius: 50%; */
     background-color: #f5f5f5;
     border: 1px solid #f5f5f5;
