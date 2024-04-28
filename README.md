@@ -14,6 +14,9 @@ Maybe you can mention me or this repo in the acknowledgements too
   <h3>
     Multilingual OCR (Optical Character Recognition)
   </h3>
+  <h5>
+    The project supports English and Devanagari characters. 
+  </h5>
   
   
 <!-- Badges -->
