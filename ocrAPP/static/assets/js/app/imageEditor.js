@@ -9,14 +9,41 @@ const myWidget = cloudinary.createUploadWidget(
         uploadPreset:uploadPreset
     },
     (error,result)=>{
-        if(!error && result && result.event === "success"){
-            console.log("Done! Here is the image info: ",result.info);
-            imageId = result.info.public_id;
-            uploadedImage.setAttribute("src",result.info.secure_url);
-            uploadedImage.style.width = "200%";
-            uploadedImage.style.height = "100%";
-            uploadedImage.style.objectFit = "contain";
-        }
+      if(!error && result && result.event === "success"){
+        console.log("Done! Here is the image info: ",result.info);
+
+        imageId = result.info.public_id;
+        uploadedImage.setAttribute("src",result.info.secure_url);
+        uploadedImage.style.width = "200%";
+        uploadedImage.style.height = "100%";
+        uploadedImage.style.objectFit = "contain";
+
+        // Create an img element with the uploaded image URL
+        var img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = function() {
+            // Create a canvas element and set its size
+            var canvas = document.createElement('canvas');
+            canvas.width = 200; // Set the desired width
+            canvas.height = 200; // Set the desired height
+
+            // Draw the image onto the canvas
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas to a data URL
+            var dataUrl = canvas.toDataURL('image/jpeg');
+
+            // Set the src attribute of the img element to the data URL
+            img.src = dataUrl;
+
+            // Append the img element to the preview div
+            var preview = document.getElementById('preview');
+            preview.innerHTML = ''; // Clear the preview div
+            preview.appendChild(img);
+        };
+        img.src = result.info.secure_url;
+    }
     }
 )
 document.getElementById("upload_widget").addEventListener("click",()=>{
@@ -39,7 +66,6 @@ function editImage(){
         image: {
             steps:[
                 "resizeAndCrop",
-                "textOverlays",
                 "export",
             ],
             export: {  
