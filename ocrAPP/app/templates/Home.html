@@ -13,32 +13,24 @@
 <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome-all.min.css' %}">
 <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
 <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome5-overrides.min.css' %}">
-{% comment %} <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}"> {% endcomment %}
-{% comment %} <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}"> {% endcomment %}
-{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}"> {% endcomment %}
-{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Clients-Slider.css' %}"> {% endcomment %}
+
 <link rel="stylesheet" href="{% static 'assets/css/Drag--Drop-Upload-Form.css' %}">
-{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Login-Box-En-login-box-en.css' %}"> {% endcomment %}
+
 <link rel="stylesheet" href="{% static 'assets/css/Login-Page-B5.css' %}">
-{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Login-with-overlay-image.css' %}"> {% endcomment %}
-{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}"> {% endcomment %}
-{% comment %} <link rel="stylesheet" href="{% static 'assets/css/Pretty-Registration-Form-.css' %}"> {% endcomment %}
 
 <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-<link href="https://media-library.cloudinary.com/global/all.css" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static 'assets/css/cloudinery.css' %}">
+
+{% comment %} <link href="https://media-library.cloudinary.com/global/all.css" rel="stylesheet"> {% endcomment %}
+{% comment %} <link href="https://widget.cloudinary.com/v2.0/global/all.css" rel="stylesheet"> {% endcomment %}
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script src="https://media-editor.cloudinary.com/all.js" type="text/javascript">  
+</script>
 <!-- ... -->
     <style>
-      .navbar {
-          z-index: 1000; /* any number larger than the z-index of .dashed_upload */
-          position: relative; /* required for z-index to take effect */
-      }
-      
-      .dashed_upload {
-          z-index: 1; /* any number smaller than the z-index of .navbar */
-          position: relative; /* required for z-index to take effect */
-        }
-
         .prev-button-container {
           position: absolute;
           top:10px; /* Adjust this value to move the button down */
@@ -55,7 +47,7 @@
 
 <body>
     {% include 'navbar.html' %}
-    <div class="container-sm max-4 p-3 m-4">
+    <div class="container-sm max-4 p-4 m-5">
         {% comment %} <form method="post" action="{% url 'home' %}" enctype="multipart/form-data"> {% endcomment %}
         {% csrf_token %}
       <div class="swiper">
@@ -63,27 +55,16 @@
               <div class="swiper-slide">
                   <div class="row gx-2">
                       <div class="col p-3  bg-light border-5 border-gray">
-                          <div class="dashed_upload">
-                                  <div class="drop">
-                                      <div class="cont">
-                                          <i class="fa fa-cloud-upload"></i>
-                                          <div class="tit">
-                                              Drag & Drop
-                                          </div>
-                                          <div class="desc">
-                                              or
-                                          </div>
-                                          <div class="browse">
-                                              click here to browse
-                                          </div>
-                                      </div>
-                                      <output id="list"></output>
-                                       
-                                      <input id="files" name="document" type="file" onchange="previewFile()" />
-                                  </div>
-                          </div>
+                        <h4>Upload and Preprocess Image</h4>
+                        <div class = "imageContainer">
+                          <img id = "uploadedimage">
+                        </div>
+                        <div class='buttonContainer'>
+                          <button id="upload_widget" class="cloudinary-button">Upload Image</button> 
+                          <button id="edit_widget" class="cloudinary-button">Edit Image</button> 
+                        </div>
                       </div>
-                      <div class="col-md-auto p-3 mx-4 bg-light border-5 border-gray">
+                      <div class="col-md-auto p-3 mx-4 bg-light border-5 border-gray image-editor">
                         <h4>Select the document language</h4>
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle px-2 py-2" type="button" id="languageButton"
@@ -112,8 +93,6 @@
                                   <li><a class="dropdown-item" href="#">need help?</a></li>
                               </ul>
                           </div>
-                          <button id="upload_widget" class="cloudinary-button">Upload files</button> 
-
                           <button id="nextButton" class="btn btn-primary">Next</button>
                       </div>
                   </div>
@@ -236,65 +215,17 @@
 {% comment %} {% if prediction_text %}
     <p>Predicted Text: {{ prediction_text }}</p>
 {% endif %} {% endcomment %}
-<script src = "{% static 'assets/js/app/dragdrop.js' %}"></script>
+<script src = "{% static 'assets/js/app/imageEditor.js' %}"></script>
 {% comment %} <script src = "{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script> {% endcomment %}
 {% comment %} <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script> {% endcomment %}
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 {% comment %} <script src = "{% static 'assets/js/main2.js' %}"></script> {% endcomment %}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
 {% comment %} <script src="https://media-library.cloudinary.com/global/all.js"></script> {% endcomment %}
-<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-
-<script>
-  var myWidget = cloudinary.createUploadWidget({
-    cloudName: 'drvwg9jwn', 
-    apiKey: '423176976473914',
-    cropping: 'server',
-    showAdvancedOptions: true,
-    croppingAspectRatio: null,
-    sources: ['local', 'url', 'camera', 'image_search'],
-    googleApiKey: 'AIzaSyA1_8PjT6xGgxoOTaxWg-ATtmSOKLbWBNM',
-    showCompletedButton: true,
-    croppingShowDimensions: true,
-    multiple: false,
-    defaultSource: 'local',
-    styles: {
-      palette: {
-        window: '#FFFFFF',
-        sourceBg: '#FFFFFF',
-        windowBorder: '#90A0B3',
-        tabIcon: '#0094C7',
-        inactiveTabIcon: '#69778A',
-        menuIcons: '#0094C7',
-        link: '#53ad9d',
-        action: '#8F5DA5',
-        inProgress: '#0194c7',
-        complete: '#53ad9d',
-        error: '#c43737',
-        textDark: '#000000',
-        textLight: '#FFFFFF'
-      },
-      fonts: {
-        default: null,
-        "'Space Mono', monospace": {
-          url: 'https://fonts.googleapis.com/css?family=Space+Mono',
-          active: true
-        }
-      },
-      widgetWidth: '500px',
-      widgetHeight: '500px'
-    }
-  }, (error, result) => { 
-    if (!error && result && result.event === "success") { 
-      console.log('Done! Here is the image info: ', result.info); 
-    }
-  })
-
-  document.getElementById("upload_widget").addEventListener("click", function(){
-      myWidget.open();
-  }, false);
-</script>
+{% comment %} <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> {% endcomment %}
 
 <script>
     var swiper = new Swiper('.swiper', {
