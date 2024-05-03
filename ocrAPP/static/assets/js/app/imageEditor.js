@@ -3,6 +3,8 @@ const cloudName = "drvwg9jwn";
 const uploadPreset = "arudwidn";
 let imageId = "sample";
 const uploadedImage = document.getElementById("uploadedimage");
+var image_url;
+
 const myWidget = cloudinary.createUploadWidget(
     {
         cloudName:cloudName,
@@ -17,32 +19,7 @@ const myWidget = cloudinary.createUploadWidget(
         uploadedImage.style.width = "200%";
         uploadedImage.style.height = "100%";
         uploadedImage.style.objectFit = "contain";
-
-        // Create an img element with the uploaded image URL
-        var img = new Image();
-        img.crossOrigin = "Anonymous";
-        img.onload = function() {
-            // Create a canvas element and set its size
-            var canvas = document.createElement('canvas');
-            canvas.width = 200; // Set the desired width
-            canvas.height = 200; // Set the desired height
-
-            // Draw the image onto the canvas
-            var ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-            // Convert the canvas to a data URL
-            var dataUrl = canvas.toDataURL('image/jpeg');
-
-            // Set the src attribute of the img element to the data URL
-            img.src = dataUrl;
-
-            // Append the img element to the preview div
-            var preview = document.getElementById('preview');
-            preview.innerHTML = ''; // Clear the preview div
-            preview.appendChild(img);
-        };
-        img.src = result.info.secure_url;
+        createPreviewImage(result.info.secure_url);
     }
     }
 )
@@ -95,55 +72,203 @@ myEditor.on("export", function(data){
 
   // Update the 'src' attribute of the 'uploadedimage' element with the URL of the edited image
   document.getElementById("uploadedimage").setAttribute("src", url);
+  createPreviewImage(url);
+  image_url=url;
 });
 }
-/* <script>
-  var myWidget = cloudinary.createUploadWidget({
-    cloudName: 'drvwg9jwn', 
-    apiKey: '423176976473914',
-    uploadPreset: 'arudwidn',
-    cropping: 'client',
-    showAdvancedOptions: true,
-    croppingAspectRatio: null,
-    sources: ['local', 'url', 'camera', 'image_search', 'dropbox', 'google_drive', 'shutterstock', 'adobe_stock'],
-    googleApiKey: 'AIzaSyA1_8PjT6xGgxoOTaxWg-ATtmSOKLbWBNM',
-    showCompletedButton: false,
-    croppingShowDimensions: true,
-    multiple: false,
-    defaultSource: 'local',
-    styles: {
-      palette: {
-        window: '#FFFFFF',
-        sourceBg: '#FFFFFF',
-        windowBorder: '#90A0B3',
-        tabIcon: '#0094C7',
-        inactiveTabIcon: '#69778A',
-        menuIcons: '#0094C7',
-        link: '#53ad9d',
-        action: '#8F5DA5',
-        inProgress: '#0194c7',
-        complete: '#53ad9d',
-        error: '#c43737',
-        textDark: '#000000',
-        textLight: '#FFFFFF'
-      },
-      fonts: {
-        default: null,
-        "'Space Mono', monospace": {
-          url: 'https://fonts.googleapis.com/css?family=Space+Mono',
-          active: true
-        }
-      },
-      widgetWidth: '500px',
-      widgetHeight: '500px'
-    }
-  }, (error, result) => { 
-    if (!error && result && result.event === "success") { 
-      console.log('Done! Here is the image info: ', result.info); 
-    }
-  })
 
-  document.getElementById("upload_widget").addEventListener("click", function(){
-      myWidget.open();
-  }, false);
-</script> */
+//function for previewing image inorder to prevent redundant code
+function createPreviewImage(url) {
+  // Create an img element with the uploaded image URL
+  var img = new Image();
+  img.crossOrigin = "Anonymous";
+  img.onload = function() {
+
+    var preview = document.getElementById('preview');
+    
+    // Create a canvas element and set its size
+    var canvas = document.createElement('canvas');
+    
+    var ctx = canvas.getContext('2d');
+
+    let rect = preview.getBoundingClientRect();
+
+    let MAX_WIDTH = rect.width;
+    let MAX_HEIGHT = rect.height;
+
+    let width = img.width+50;
+    let height = img.height-50;
+
+    let scaleFactor = Math.min(MAX_WIDTH / width, MAX_HEIGHT / height);
+
+    if (scaleFactor < 1) {
+      width *= scaleFactor;
+      height *= scaleFactor;
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+
+    // Draw the image onto the canvas
+    ctx.drawImage(img, 0, 0, width, height);
+
+    // Convert the canvas to a data URL
+    var dataUrl = canvas.toDataURL('image/jpeg');
+
+    // Create a new img element for the preview
+    var previewImg = new Image();
+
+    previewImg.src = dataUrl;
+
+    // Append the img element to the preview div
+    preview.innerHTML = ''; // Clear the preview div
+    preview.appendChild(previewImg);
+  };
+  img.src = url;
+  image_url = url;
+}
+
+var globalImageBlob;
+
+document.getElementById('detectCharactersButton').addEventListener('click', function(event) {
+  console.log('Detecting characters');
+
+  // Fetch the image data
+  fetch(image_url)
+      .then(response => response.blob())
+      .then(imageBlob => {
+
+            // Store the image blob in the global variable
+          globalImageBlob = imageBlob;
+
+          // Create a FormData object
+          var formData = new FormData();
+
+          // Append the image data
+          formData.append('document', imageBlob, 'image.jpg');
+
+          // Send the POST request
+          return fetch('http://127.0.0.1:8000/app/api/document/', {
+              method: 'POST',
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}'
+              },
+              body: formData
+          });
+      })
+      .then(response => response.blob())
+      .then(blob => {
+          let preview = document.getElementById('preview');
+          let objectURL = URL.createObjectURL(blob);
+          preview.innerHTML = '<p>Detected Character lines</p><img src="' + objectURL + '">';
+          document.getElementById('predict-button').style.display = 'block';
+          document.querySelector('.card').style.display = 'block';
+          document.getElementById('predicted-text').innerHTML='<h3 style="color:green">Predicted Text Will Appear Here</h3>';
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+});
+
+var swiper = new Swiper('.swiper', {
+        direction: 'horizontal',
+        loop: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+
+    document.getElementById('nextButton').addEventListener('click', function() {
+        swiper.slideNext();
+    });
+
+    /*document.getElementById('prevButton').addEventListener('click', function() {
+        swiper.slidePrev();
+    });*/
+
+    let language = '';
+    let outputFormat = '';
+  
+      function setLanguage(lang) {
+          language = lang;
+          console.log(language);
+          document.getElementById('languageButton').textContent = language;
+      }
+  
+      function setOutputFormat(format) {
+          outputFormat = format;
+          console.log(outputFormat);
+          document.getElementById('outputFormatButton').textContent = outputFormat;
+      }
+
+    
+    document.getElementById('predict-button').addEventListener('click', function(event) {
+      event.preventDefault();
+      if(!language || !outputFormat){
+        if(language && !outputFormat){
+          text = 'Please select the output format first!';
+        } else if(!language && outputFormat){
+          text = 'Please select the language first!';
+        } else {
+          text = 'Please select the language and output format first!';
+        }
+        // Inject style tag into head
+        var style = document.createElement('style');
+        style.innerHTML = `
+        .swal2-popup {
+            font-size: 1.1em !important; /* Change font size */
+            width: 25em !important; /* Change width */
+        }`;
+        document.head.appendChild(style);
+
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'error',
+          title: 'Oops...',
+          text: text,
+          timer: 3000
+        });
+        return;
+      }
+      console.log('Predicting');
+      var file = globalImageBlob; // Get the original file
+      var formData = new FormData();
+      formData.append('document', file);
+      formData.append('language', language);
+      
+      fetch('http://127.0.0.1:8000/app/api/predict/', {
+          method: 'POST',
+          headers: {
+          'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: formData }).then(response => response.text())
+      .then(data => {
+        console.log(data);
+// Handle the final_predictions here
+var final_predictions = JSON.parse(data);  // Parse the data as JSON
+
+var predictedElement = document.getElementById('predicted-text');
+predictedElement.innerHTML = '';
+ // Add the style dynamically
+ predictedElement.style.whiteSpace = 'pre';
+ predictedElement.style.width = '300px';
+ predictedElement.style.height = '300px';
+ predictedElement.style.overflow = 'auto';
+ predictedElement.style.style = 'regular';
+var i = 0;
+function typeWriter() {
+    if (i < final_predictions.length) {
+        predictedElement.innerHTML += final_predictions[i] + '<br>';
+        i++;
+        setTimeout(typeWriter, 200);  // Adjust the speed of the typing effect here
+    }
+}
+typeWriter();
+})
+.catch(error => console.error('Error:', error.message));
+  });
