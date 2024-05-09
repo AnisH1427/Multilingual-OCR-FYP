@@ -1,0 +1,1 @@
+ python -m tensorboard.main --logdir path_of_model_logs
