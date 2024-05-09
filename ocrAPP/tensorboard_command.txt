@@ -1,1 +1,1 @@
- python -m tensorboard.main --logdir path_of_model_logs
+ python -m tensorboard.main --logdir first_logs_path, second_logs_path
