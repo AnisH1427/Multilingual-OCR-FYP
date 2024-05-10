@@ -9,7 +9,7 @@ class ImageToWordModel(OnnxInferenceModel):
     def __init__(self, model_path: str, vocab: list, *args, **kwargs):
         super().__init__(model_path=model_path, *args, **kwargs)
         self.vocab = vocab
-
+        self.input_name='input'
     def predict(self, image: np.ndarray):
         
         image = cv2.resize(image, (1408, 96))
