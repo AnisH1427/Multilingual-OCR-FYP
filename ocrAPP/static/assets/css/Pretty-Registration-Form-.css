@@ -122,3 +122,22 @@
   width: 100%;
   padding-right: 30px; /* Make room for the eye icon */
 }
+
+.googlelogo{
+  width: 20px; 
+  filter: brightness(100%);
+  margin-left:0px !important;
+}
+
+.gp-login {
+  background-color: transparent;
+  margin-top:10px;
+}
+
+.login-box-content i {
+  /* padding: 11px 0px 11px 15px; */
+  color: white;
+  padding-right: 20px;
+  padding-left: 80px;
+  font-size: 18px;
+}
