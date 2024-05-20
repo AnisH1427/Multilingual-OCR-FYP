@@ -4,7 +4,7 @@
   <h1>Final Year Project</h1>
   
   <h3>
-    Multilingual OCR (Optical Character Recognition)
+    MOCR (Multilingual Optical Character Recognition)
   </h3>
   <h5>
     The project supports English and Devanagari characters. 
