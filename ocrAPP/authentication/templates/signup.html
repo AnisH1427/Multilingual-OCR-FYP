@@ -5,8 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>fypDesign</title>
+    <title>Create Account</title>
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="shortcut icon" href="#">
     {% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"> {% endcomment %}
     {% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap"> {% endcomment %}
     {% comment %} <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}"> {% endcomment %}
@@ -111,6 +112,10 @@
                 </div>
                 {% comment %} <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" name="terms" required style="margin-left: 130px;"><label class="form-check-label" for="formCheck-1" style="margin-left: 2px;">I've read and accept the terms and conditions</label></div> {% endcomment %}
                 <div id="recaptchaWidget" class="g-recaptcha" data-sitekey="6LfrX4cpAAAAAL8AAjRK6p-SXkJOs_9OjABD4lnN" data-callback="onSubmit" data-size="invisible"></div>
+
+                <div id="login-box-footer" style="padding:10px 20px;padding-bottom:23px;padding-top:18px;">
+                    <p style="margin-bottom:0px; font-size: 14px;">Already have an account?<a id="register-link" href="/login/" style="font-size: 14px; margin-left: 10px;">Log in</a></p>
+                </div>
 
                 <button id="registerButton" class="btn btn-light submit-button" type="button">Create Account</button>   
             </form>

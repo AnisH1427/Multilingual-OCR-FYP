@@ -170,6 +170,15 @@ class UserUpdateView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+    
+from rest_framework.generics import DestroyAPIView
+
+class UserDeleteView(DestroyAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
 
 from django.http import HttpResponse
 from django.contrib.auth.decorators import user_passes_test
@@ -186,3 +195,6 @@ def tensorboard(request):
     url2 = tb2.launch()
 
     return HttpResponse(f'<h2>English Model</h2><iframe src="{url1}" width="100%" height="600"></iframe><h2>Devanagari Model</h2><iframe src="{url2}" width="100%" height="600"></iframe>')
+
+def guide(request):
+    return render(request, 'guide.html')

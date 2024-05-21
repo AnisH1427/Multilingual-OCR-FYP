@@ -5,17 +5,14 @@
 {% load static %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>fypDesign</title>
+<title>IntelligentReader.ai</title>
 <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
-
+<link rel="shortcut icon" href="#">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
 <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome-all.min.css' %}">
 <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
-<link rel="stylesheet" href="{% static 'assets/fonts/fontawesome5-overrides.min.css' %}">
-
-<link rel="stylesheet" href="{% static 'assets/css/Drag--Drop-Upload-Form.css' %}">
-
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}"> {% endcomment %}
 <link rel="stylesheet" href="{% static 'assets/css/Login-Page-B5.css' %}">
 
 <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
@@ -192,10 +189,8 @@
 <div id="preview"></div>
 <br><br><br><br><br>
 <!-- home.html -->
-{% if prediction_text %}
-    <p>Predicted Text: {{ prediction_text }}</p>
-{% endif %}
-<script src="{% static 'assets/js/app/dragdrop.js' %}"></script>
+
+{% comment %} <script src="{% static 'assets/js/app/dragdrop.js' %}"></script> {% endcomment %}
 <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 {% comment %} <script src="{% static 'assets/js/main2.js' %}"></script> {% endcomment %}

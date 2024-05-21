@@ -4,6 +4,10 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     const username = document.querySelector('.username-input').value;
     const password = document.querySelector('.password-input').value;
 
+    
+    console.log('username:', username);
+    console.log('password:', password);
+
     // Check if username field is empty
     if (!username) {
         return swal("Oops!", "Looks like you forgot to fill in the username.", "warning");
@@ -23,19 +27,23 @@ document.getElementById('login-form').addEventListener('submit', function(event)
         return swal("Oops!", "Password must be at least 4 characters long.", "warning");
     }
     
-    fetch('http://127.0.0.1:8000/api/auth/login/', { // Added trailing slash
+    fetch('http://127.0.0.1:8000/api/auth/login/', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username,
-            password
+            username: username,
+            password: password
         })
+        
     })
     .then(response => {
+        if (response.status === 400) {
+            throw new Error('Bad Request. The server could not understand the request due to invalid syntax.');
+        }
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
     })
@@ -64,5 +72,10 @@ document.getElementById('login-form').addEventListener('submit', function(event)
             swal("Oops!", "It seems like your username or password is incorrect.", "error");
         }
     })
-    .catch(error => swal("Error!", "There was a problem logging you in.", "error"));
-});
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        swal("Error!", "There was a problem logging you in.", "error")
+    });
+
+}
+);

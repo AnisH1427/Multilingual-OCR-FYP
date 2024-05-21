@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home</title>
-
+    <link rel="shortcut icon" href="#">
      <!-- Google Web Fonts -->
      <link rel="preconnect" href="https://fonts.googleapis.com">
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,10 +22,10 @@
     {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> {% endcomment %}
     
     <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome-all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/bs-theme-overrides.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'assets/css/animated-services.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/Articles-Cards-images.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/Navbar-Right-Links-icons.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
     {% comment %} <link rel="stylesheet" href="{% static 'assets/css/styles2.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'assets/css/footer.css' %}">
@@ -45,22 +45,14 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">About</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Team</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
+                   
                 </ul>
-                <a href="#" class="btn btn-outline-light get-started-btn">Get Started</a>
+                <a href="/login/" class="btn btn-outline-light get-started-btn">Get Started</a>
             </div>
         </div>
     </header>
@@ -289,7 +281,7 @@
         <div class="container" style="padding-top: 48px;">
             <div class="text-center p-4 p-lg-5">
                 <p class="fw-bold text-primary mb-2">Intelligent Reader</p>
-                <h1 class="fw-bold mb-4">Get Started with Us</h1><button class="btn btn-primary fs-5 me-2 py-2 px-4" type="button">Readmore</button><button class="btn btn-light fs-5 py-2 px-4" type="button">Register</button>
+                <h1 class="fw-bold mb-4">Get Started with Us</h1><button class="btn btn-primary fs-5 me-2 py-2 px-4" type="button">Readmore</button><a class="btn btn-light fs-5 py-2 px-4" type="button" href="/register/">Register</a>
             </div>
         </div>
     </section>
