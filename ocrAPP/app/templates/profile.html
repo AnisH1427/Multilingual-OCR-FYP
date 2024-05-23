@@ -20,8 +20,8 @@
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="main-breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/app/home/">Home</a></li>
-            {% comment %} <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li> {% endcomment %}
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'guide' %}">Guide to Use</a></li>
             <li class="breadcrumb-item active" aria-current="page">Profile Settings</li>
           </ol>
         </nav>

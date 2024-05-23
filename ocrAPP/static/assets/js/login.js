@@ -27,7 +27,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
         return swal("Oops!", "Password must be at least 4 characters long.", "warning");
     }
     
-    fetch('http://127.0.0.1:8000/api/auth/login/', { 
+    fetch('/api/auth/login/', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
             // Successfully provided credential
             localStorage.setItem('token', data.key);
             // Fetch user data after successful login
-            fetch('http://127.0.0.1:8000/api/auth/user/', { // Added full URL and trailing slash
+            fetch('/api/auth/user/', { // Added full URL and trailing slash
                 headers: {
                     'Authorization': `Token ${data.key}`
                 }

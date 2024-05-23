@@ -106,13 +106,13 @@ body{
   text-transform: uppercase;
 }
 
-.navbar-nav .active a {
-  color: #fff; /* Active link color */
-}
+/* .navbar-nav .active a {
+  color: #fff; 
+} */
 
-.navbar-nav a:hover {
-  color: #fff; /* Hover link color */
-}
+/* .navbar-nav a:hover {
+  color: #fff; 
+} */
 .collapse >ul >li a::before{
   content: "";
   position: absolute;
@@ -132,9 +132,9 @@ body{
   width:100%;
 } 
 
-.collapse a:hover,
-.collapse .active > a, 
-.collapse li:hover > a
+/* .collapse a:hover, */
+.collapse .active > a
+/* .collapse li:hover > a */
 {
   color: #ffffff;
 } 
