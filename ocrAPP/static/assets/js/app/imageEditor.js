@@ -45,6 +45,12 @@ function editImage(){
                 "resizeAndCrop",
                 "export",
             ],
+            resizeAndCrop: {
+              cropMode: "fixed", // Fixed aspect ratio cropping
+              croppingShowDimensions: true, // Show crop dimensions
+              cropping: true,
+              croppingAspectRatio: 1, // Set your desired aspect ratio here
+          },
             export: {  
                 "formats":[
                     "auto",
@@ -96,17 +102,10 @@ function createPreviewImage(url) {
     let MAX_WIDTH = rect.width;
     let MAX_HEIGHT = rect.height;
 
-    // let width = img.width+50;
-    // let height = img.height-50;
     let width = img.width;
     let height = img.height;
 
-    // let scaleFactor = Math.min(MAX_WIDTH / width, MAX_HEIGHT / height);
-
-    // if (scaleFactor < 1) {
-    //   width *= scaleFactor;
-    //   height *= scaleFactor;
-    // }
+  
 
     canvas.width = width;
     canvas.height = height;
@@ -162,7 +161,7 @@ document.getElementById('detectCharactersButton').addEventListener('click', func
       .then(blob => {
           let preview = document.getElementById('preview');
           let objectURL = URL.createObjectURL(blob);
-          // preview.innerHTML = '<p>Detected Character lines</p><img src="' + objectURL + '">';
+          preview.innerHTML = '<img src="' + objectURL + '">';
           document.getElementById('predict-button').style.display = 'block';
           document.querySelector('.card').style.display = 'block';
           document.getElementById('predicted-text').innerHTML='<h3 style="color:green">Predicted Text Will Appear Here</h3>';
@@ -262,9 +261,9 @@ var predictedElement = document.getElementById('predicted-text');
 predictedElement.innerHTML = '';
  // Add the style dynamically
  predictedElement.style.whiteSpace = 'pre';
- predictedElement.style.width = '500px';
- predictedElement.style.height = '500px';
- predictedElement.style.overflow = 'hidden';
+ predictedElement.style.width = '750px';
+ predictedElement.style.height = '150px';
+ predictedElement.style.overflow = 'auto';
  predictedElement.style.fontStyle = 'regular';
 var i = 0;
 function typeWriter() {
