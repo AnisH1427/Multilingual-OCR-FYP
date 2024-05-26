@@ -13,6 +13,7 @@ from django.core.exceptions import ValidationError
 from django.core.exceptions import ValidationError
 from rest_framework import generics
 from .serializers import RegisterSerializer
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 def home(request):
@@ -20,6 +21,14 @@ def home(request):
 
 def loginpage(request):
     return render(request,'login.html')
+
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+# @require_POST
+# def logout_view(request):
+#     logout(request)
+#     return JsonResponse({'message': 'Successfully logged out'}, status=200)
 
 
 class CustomRegisterView(generics.CreateAPIView):

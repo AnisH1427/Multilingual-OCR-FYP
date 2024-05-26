@@ -132,7 +132,19 @@ function createPreviewImage(url) {
 var globalImageBlob;
 
 document.getElementById('detectCharactersButton').addEventListener('click', function(event) {
+  event.preventDefault();
   console.log('Detecting characters');
+
+    // Check if an image has been uploaded
+    var previewDiv = document.getElementById('preview');
+    if (!previewDiv || !previewDiv.innerHTML.includes('<img')) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please upload an image before detecting characters.',
+      });
+      return;
+    }
 
   // Fetch the image data
   fetch(image_url)
@@ -147,6 +159,15 @@ document.getElementById('detectCharactersButton').addEventListener('click', func
 
           // Append the image data
           formData.append('document', imageBlob, 'image.jpg');
+
+          // Get the selected edge detection method
+          var selectElement = document.getElementById('edge-detection');
+          var selectedOption = selectElement.value;
+
+          // Append the selected edge detection method
+          formData.append('edge_detection_method', selectedOption);
+
+          console.log(selectedOption);
 
           // Send the POST request
           return fetch('/app/api/document/', {
@@ -245,6 +266,13 @@ var swiper = new Swiper('.swiper', {
       var formData = new FormData();
       formData.append('document', file);
       formData.append('language', language);
+
+      // Get the selected edge detection method
+      var selectElement = document.getElementById('edge-detection');
+      var selectedOption = selectElement.value;
+
+      // Append the selected edge detection method
+      formData.append('edge_detection_method', selectedOption);
       
       fetch('/app/api/predict/', {
           method: 'POST',
@@ -265,8 +293,14 @@ predictedElement.innerHTML = '';
  predictedElement.style.height = '150px';
  predictedElement.style.overflow = 'auto';
  predictedElement.style.fontStyle = 'regular';
-var i = 0;
-function typeWriter() {
+
+ if(selectedOption=="chain_word"){
+  predictedElement.innerHTML += final_predictions;
+  }
+  else{
+    var i = 0;
+    function typeWriter() {
+    
     if (i < final_predictions.length) {
         predictedElement.innerHTML += final_predictions[i] + '<br>';
         i++;
@@ -274,8 +308,8 @@ function typeWriter() {
     }
 }
 typeWriter();
+  }
 
 })
-
 .catch(error => console.error('Error:', error.message));
   });

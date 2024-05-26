@@ -28,8 +28,11 @@ class DocumentViewSet(viewsets.ModelViewSet):
             if image is None:
                 return Response({'detail': 'Invalid image'}, status=status.HTTP_400_BAD_REQUEST)
             
-            # Use the detect_english_contours function to detect contours and draw rectangles on the image
-            image = detect_contours(image)
+            # Get the edge detection method from the POST data
+            edge_detection_method = request.POST.get('edge_detection_method','chain_line')
+            print(edge_detection_method)
+            # Use the detect_contours function to detect contours and draw rectangles on the image
+            image = detect_contours(image, edge_detection_method)
             
             # Convert the image to PIL format
             pil_image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
@@ -65,7 +68,8 @@ class PredictView(APIView):
         if language == 'English':
             configs = BaseModelConfigs.load("Model/202404021423/configs.yaml")
         elif language == 'Hindi' or language == 'Nepali':
-            configs = BaseModelConfigs.load("Model/Devanagari/202404190616/configs.yaml")
+            language="Devanagari"
+            configs = BaseModelConfigs.load("Model/Devanagari/202405030509/configs.yaml")
         else:
             return Response({'error': 'Invalid language'}, status=400)
         
@@ -73,52 +77,58 @@ class PredictView(APIView):
 
         # configs = BaseModelConfigs.load("Model/202403031722/configs.yaml")
 
+        # Get the edge detection method from the POST data
+        edge_detection_method = request.POST.get('edge_detection_method','chain_line')
+        print(edge_detection_method)
         model = ImageToWordModel(model_path=configs.model_path, vocab=configs.vocab)
         
-        #image Preprocessing
-        
-        # Check the number of channels in the image
-        if len(image.shape) == 3 and image.shape[2] == 3:
-            # Convert image to grayscale
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        if(language=="Devanagari"):
+            #image Preprocessing
+            
+            # Check the number of channels in the image
+            if len(image.shape) == 3 and image.shape[2] == 3:
+                # Convert image to grayscale
+                gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            else:
+                gray = image
+
+            ret,thresh = cv2.threshold(gray,127,255,cv2.THRESH_BINARY_INV)
+            kernel = np.ones((5,200), np.uint8)
+            img_dilation = cv2.dilate(thresh, kernel, iterations=1)
+            
+            # Find contours
+            contours, hierarchy = cv2.findContours(img_dilation.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+            # Sort contours based on their bounding box coordinates
+            bounding_boxes = [cv2.boundingRect(ctr) for ctr in contours]
+            sorted_contours = [ctr for _, ctr in sorted(zip(bounding_boxes, contours), key=lambda pair: pair[0][1])]
+
+            # Create a list to store predicted texts
+            predicted_texts = []
+            # Loop over sorted contours
+            for i, ctr in enumerate(sorted_contours):
+                # Get bounding box
+                x, y, w, h = cv2.boundingRect(ctr)
+
+                # Getting ROI
+                roi = image[y:y+h, x:x+w]
+                roi_row = roi.shape[0]
+                roi_col = roi.shape[1]
+
+                # Show ROI
+                if(roi_row>3000 or roi_row<=20 or roi_row<=10 or roi_col<=110):
+                    continue
+                # Predict text from the image
+                prediction_text = model.predict(roi)
+
+                # Append the prediction along with the bounding box coordinates to the list
+                predicted_texts.append((x, y, prediction_text))
+
+                # Sort the list based on y-coordinate, then x-coordinate
+                sorted_predictions = sorted(predicted_texts, key=lambda x: (x[1], x[0]))
+                final_predictions = [x[2] for x in sorted_predictions]
         else:
-            gray = image
-
-        ret,thresh = cv2.threshold(gray,127,255,cv2.THRESH_BINARY_INV)
-        kernel = np.ones((5,200), np.uint8)
-        img_dilation = cv2.dilate(thresh, kernel, iterations=1)
-        
-        # Find contours
-        contours, hierarchy = cv2.findContours(img_dilation.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-        # Sort contours based on their bounding box coordinates
-        bounding_boxes = [cv2.boundingRect(ctr) for ctr in contours]
-        sorted_contours = [ctr for _, ctr in sorted(zip(bounding_boxes, contours), key=lambda pair: pair[0][1])]
-
-        # Create a list to store predicted texts
-        predicted_texts = []
-        # Loop over sorted contours
-        for i, ctr in enumerate(sorted_contours):
-            # Get bounding box
-            x, y, w, h = cv2.boundingRect(ctr)
-
-            # Getting ROI
-            roi = image[y:y+h, x:x+w]
-            roi_row = roi.shape[0]
-            roi_col = roi.shape[1]
-
-            # Show ROI
-            if(roi_row>3000 or roi_row<=20 or roi_row<=10 or roi_col<=110):
-                continue
-            # Predict text from the image
-            prediction_text = model.predict(roi)
-
-            # Append the prediction along with the bounding box coordinates to the list
-            predicted_texts.append((x, y, prediction_text))
-
-        # Sort the list based on y-coordinate, then x-coordinate
-        sorted_predictions = sorted(predicted_texts, key=lambda x: (x[1], x[0]))
-        final_predictions = [x[2] for x in sorted_predictions]
+            final_predictions = detect_contours(image, edge_detection_method, predict=True, model=model, language=language)
         print(final_predictions)
         
         # Return the predictions as a JSON response
@@ -153,13 +163,17 @@ import requests
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=False)
+    
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'gender']
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'gender','password']
 
     def update(self, instance, validated_data):
         for attr, value in validated_data.items():
-            if getattr(instance, attr) != value:
+            if attr == 'password':
+                instance.set_password(value)
+            elif getattr(instance, attr) != value:
                 setattr(instance, attr, value)
         instance.save()
         return instance
@@ -170,6 +184,15 @@ class UserUpdateView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+    
+    def perform_update(self, serializer):
+        instance = serializer.save()
+
+        # Generate a new token
+        token, created = Token.objects.get_or_create(user=instance)
+
+        # Add the token to the response
+        return Response({'token': token.key, 'user': serializer.data})
     
 from rest_framework.generics import DestroyAPIView
 
@@ -196,5 +219,6 @@ def tensorboard(request):
 
     return HttpResponse(f'<h2>English Model</h2><iframe src="{url1}" width="100%" height="600"></iframe><h2>Devanagari Model</h2><iframe src="{url2}" width="100%" height="600"></iframe>')
 
+@login_required(login_url='/login/')
 def guide(request):
     return render(request, 'guide.html')

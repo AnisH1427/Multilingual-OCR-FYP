@@ -101,22 +101,16 @@
                   <div class="row gx-2">
                               <div class="col-3 mr-5 pr-5 bg-light border-5 border-gray">
 
-                                  <p>Image Pre-Processing</p>
-                                  <label for="threshold" class="form-label">Threshold</label>
-                                  <input type="range" class="form-range" id="threshold">
-                                  <div class="p-1 mb-2 bg-secondary text-white" >Threshold Value</div>
-  
-                                  <label for="binarization" class="form-label">Binarization</label>
-                                  <input type="range" class="form-range" id="binarization">
-                                  <div class="p-1 mb-2 bg-secondary text-white">Binary value</div>
-  
-                                  <label for="dilation" class="form-label">Dilation</label>
-                                  <input type="range" class="form-range" id="dilation">
-                                  <div class="p-1 mb-2 bg-secondary text-white">Dilation value</div>
+                                <label for="edge-detection" class="form-label">Edge Detection Algorithm</label>
+                                <select class="form-select" id="edge-detection">
+                                    <option value="chain_line" selected>Chain_line</option>
+                                    <option value="otsu_line">Otsu_line</option>
+                                    <option value="chain_word">chain_word</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                        <div class="p-1 mt-1 bg-secondary text-white">Selected Algorithms</div>
 
-                                    {% comment %} <button type="button" class="btn btn-outline-success">Set Default Value</button>  {% endcomment %}
-
-                                    <button type="submit" id="detectCharactersButton" class="btn btn-outline-success mt-5">Detect Characters</button>
+                        <button type="submit" id="detectCharactersButton" class="btn btn-outline-success mt-5">Detect Characters</button>
                               </div>
                               <div class="col-9 pl-5 ml-5 bg-light border-5 border-gray imageContainer" style="width:600px; height:600px; margin-left:120px;" id="preview">
 
