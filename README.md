@@ -92,8 +92,13 @@ For the English language model, I used the IAM English handwritten dataset. This
 <img src="assets/image-5.png" alt="Edited" />
 <img src="assets/image-6.png" alt="Edge Detection" />
 <img src="assets/image-7.png" alt="Prediction" />
+<img src="assets/english_cer.png" alt="English CER" />
+<img src="assets/english_wer.png" alt="English WER" />
 <img src="assets/image-8.png" alt="Detecting edge in Devanagari image" />
 <img src="assets/image-9.png" alt="Making Prediction" />
+<img src="assets/devanagari_cer.png" alt="Devanagari CER"/>
+<img src="assets/devanagari_wer.png" alt="Devanagari WER"/>
+
   <!-- <!-- <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" /> -->
 </div>
 
