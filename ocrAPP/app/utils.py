@@ -103,8 +103,8 @@ def detect_contours(image, edge_detection_method="chain_line", predict=False, mo
             roi_row = roi.shape[0]
             roi_col = roi.shape[1]
              # Show ROI
-            # if(roi_row>3000 or roi_row<=30):
-            #     continue
+            if(roi_row>1000 or roi_row<=30):
+                continue
             cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
 
     def resize_image(image, max_width=500, max_height=500):
@@ -146,15 +146,17 @@ def detect_contours(image, edge_detection_method="chain_line", predict=False, mo
             roi_row = roi.shape[0]
             roi_col = roi.shape[1]
              # Show ROI
-            # if(roi_row>3000 or roi_row<=50 or roi_col<=110):
-            #     continue
+            if(roi_row>1000 or roi_row<=50):
+                continue
             
             prediction = model.predict(roi,language=language)  # make prediction here
             predicted_texts.append((x, y, prediction))
             
         # Sort the list based on y-coordinate, then x-coordinate
         sorted_predictions = sorted(predicted_texts, key=lambda x: (x[1], x[0]))
+        
         final_predictions = [x[2] for x in sorted_predictions]
+        final_predictions = [x[2].lstrip('I') for x in sorted_predictions]
         print(final_predictions)
         
         return final_predictions
