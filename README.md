@@ -80,7 +80,17 @@
 ### :camera: Screenshots
 
 <div align="center"> 
-  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
+  ![Visiting Page](image.png)
+  <!-- <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" /> -->
+  ![Register](assets/image-1.png)
+  ![Login](assets/image-2.png)
+  ![Upload](assets/image-3.png)
+  ![Uploaded](assets/image-4.png)
+  ![Edited](assets/image-5.png)
+  ![Edge Detection](assets/image-6.png)
+  ![Prediction](assets/image-7.png)
+  ![Detecting edge in Devanagari image](assets/image-8.png)
+  ![Making Prediction](assets/image-9.png)
 </div>
 
 
