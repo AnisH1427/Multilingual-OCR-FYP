@@ -80,17 +80,17 @@
 ### :camera: Screenshots
 
 <div align="center"> 
-  ![Visiting Page](image.png)
-  <!-- <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" /> -->
-  ![Register](assets/image-1.png)
-  ![Login](assets/image-2.png)
-  ![Upload](assets/image-3.png)
-  ![Uploaded](assets/image-4.png)
-  ![Edited](assets/image-5.png)
-  ![Edge Detection](assets/image-6.png)
-  ![Prediction](assets/image-7.png)
-  ![Detecting edge in Devanagari image](assets/image-8.png)
-  ![Making Prediction](assets/image-9.png)
+<img src="assets/image.png" alt="Visiter page" />
+<img src="assets/image-1.png" alt="Register" />
+<img src="assets/image-2.png" alt="Login" />
+<img src="assets/image-3.png" alt="Upload" />
+<img src="assets/image-4.png" alt="Uploaded" />
+<img src="assets/image-5.png" alt="Edited" />
+<img src="assets/image-6.png" alt="Edge Detection" />
+<img src="assets/image-7.png" alt="Prediction" />
+<img src="assets/image-8.png" alt="Detecting edge in Devanagari image" />
+<img src="assets/image-9.png" alt="Making Prediction" />
+  <!-- <!-- <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" /> -->
 </div>
 
 
