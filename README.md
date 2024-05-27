@@ -50,6 +50,7 @@
 # :notebook_with_decorative_cover: Table of Contents
 
 - [About the Project](#star2-about-the-project)
+  * [Datasets] (#datasets)
   * [Screenshots](#camera-screenshots)
   * [Tech Stack](#space_invader-tech-stack)
   * [Features](#dart-features)
@@ -74,7 +75,10 @@
 
 <!-- About the Project -->
 ## :star2: About the Project
+I have used this project using CRNN+Ctc loss. The OCR project has two languages: English and Devanagari. It uses Chain approximation and Otsu method for edge detection, and makes predictions based on the detected edges.
 
+### :datasets: About the datasets
+For the English language model, I used the IAM English handwritten dataset. This is a widely recognized dataset for training and evaluating handwritten text recognition systems. To train the Devanagari model, I manually collected and labeled a dataset of Bhagwat Gita scriptures. Bhagwat Gita is a sacred Hindu text written in the Devanagari, Hindi with some sort of sanskrit script, providing a challenging and domain-specific dataset for the Devanagari OCR task.
 
 <!-- Screenshots -->
 ### :camera: Screenshots
@@ -98,37 +102,41 @@
 ### :space_invader: Tech Stack
 
 <details>
-  <summary>Client</summary>
+  <summary>Modeling stacks</summary>
   <ul>
-    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
-    <li><a href="https://nextjs.org/">Next.js</a></li>
-    <li><a href="https://reactjs.org/">React.js</a></li>
-    <li><a href="https://tailwindcss.com/">TailwindCSS</a></li>
+    <li><a href="https://www.typescriptlang.org/">MLTU</a></li>
+    <li><a href="https://expressjs.com/">Tensorflow</a></li>
+    <li><a href="https://go.dev/">Keras</a></li>
+    <li><a href="https://go.dev/">OpenCV</a></li>
+    <li><a href="https://go.dev/">Tensorboard</a></li>
   </ul>
 </details>
+
 
 <details>
   <summary>Server</summary>
   <ul>
-    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
-    <li><a href="https://expressjs.com/">Express.js</a></li>
-    <li><a href="https://go.dev/">Golang</a></li>
-    <li><a href="https://nestjs.com/">Nest.js</a></li>
-    <li><a href="https://socket.io/">SocketIO</a></li>
-    <li><a href="https://www.prisma.io/">Prisma</a></li>    
-    <li><a href="https://www.apollographql.com/">Apollo</a></li>
-    <li><a href="https://graphql.org/">GraphQL</a></li>
+    <li><a href="https://www.typescriptlang.org/">Python</a></li>
+    <li><a href="https://expressjs.com/">Django Rest Framework</a></li>
+    <li><a href="https://go.dev/">Cloudinery</a></li>
+ 
   </ul>
 </details>
 
 <details>
 <summary>Database</summary>
   <ul>
-    <li><a href="https://www.mysql.com/">MySQL</a></li>
-    <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
-    <li><a href="https://redis.io/">Redis</a></li>
-    <li><a href="https://neo4j.com/">Neo4j</a></li>
-    <li><a href="https://www.mongodb.com/">MongoDB</a></li>
+    <li><a href="https://www.sqlite.org/">SQLite</a></li>
+  </ul>
+</details>
+
+<details>
+  <summary>Client</summary>
+  <ul>
+    <li><a href="https://www.typescriptlang.org/">Vannila Javascript</a></li>
+    <li><a href="https://nextjs.org/">Html</a></li>
+    <li><a href="https://reactjs.org/">CSS</a></li>
+    <li><a href="https://tailwindcss.com/">Bootstrap</a></li>
   </ul>
 </details>
 
@@ -136,17 +144,15 @@
 <summary>DevOps</summary>
   <ul>
     <li><a href="https://www.docker.com/">Docker</a></li>
-    <li><a href="https://www.jenkins.io/">Jenkins</a></li>
-    <li><a href="https://circleci.com/">CircleCLI</a></li>
   </ul>
 </details>
 
 <!-- Features -->
 ### :dart: Features
 
-- Feature 1
-- Feature 2
-- Feature 3
+- OCR model develop from ownselves instead of using Others
+- Detect, Extract textual content from Image and export in desired format
+- Supports Two language script, English and Devanagari
 
 <!-- Color Reference -->
 ### :art: Color Reference
@@ -164,40 +170,17 @@
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`API_KEY`
+` Cloudinery API_KEY for storing Uploaded image`
 
-`ANOTHER_API_KEY`
+`Your email host password for recovering forgot password`
 
 <!-- Getting Started -->
-## 	:toolbox: Getting Started
+## :toolbox: Getting Started
 
 <!-- Prerequisites -->
 ### :bangbang: Prerequisites
 
-This project uses Yarn as package manager
-
-```bash
- npm install --global yarn
-```
-
-<!-- Installation -->
-### :gear: Installation
-
-Install my-project with npm
-
-```bash
-  yarn install my-project
-  cd my-project
-```
-   
-<!-- Running Tests -->
-### :test_tube: Running Tests
-
-To run tests, run the following command
-
-```bash
-  yarn test test
-```
+This project uses Docker for containerization. Make sure you have Docker installed on your machine. If not, you can download it from [here](https://www.docker.com/products/docker-desktop).
 
 <!-- Run Locally -->
 ### :running: Run Locally
@@ -211,65 +194,91 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd Multilingual-OCR-FYP
+```
+
+Install pipenv if you haven't already
+
+```bash
+  pip install pipenv
 ```
 
 Install dependencies
 
 ```bash
-  yarn install
+  pipenv install
+```
+
+Activate the pipenv shell
+
+```bash
+  pipenv shell
 ```
 
 Start the server
 
 ```bash
-  yarn start
+  python manage.py runserver
 ```
 
+<!-- Dockerization -->
+### :whale: Dockerization
+
+Build the Docker image
+
+```bash
+docker build -t your-image-name .
+```
+
+Check the Docker images
+
+```bash
+docker images
+```
+
+Run the Docker container
+
+```bash
+docker run -d -p 8080:80 your-image-name
+```
 
 <!-- Deployment -->
 ### :triangular_flag_on_post: Deployment
 
-To deploy this project run
+To deploy this project, you can use the Docker container you built in the previous step.
+
+<!-- Running Tests -->
+### :test_tube: Running Tests
+
+To run tests, use the following command
 
 ```bash
-  yarn deploy
-```
-
-
-<!-- Usage -->
-## :eyes: Usage
-
-Use this space to tell a little more about your project and how it can be used. Show additional screenshots, code samples, demos or link to other resources.
-
-
-```javascript
-import Component from 'my-project'
-
-function App() {
-  return <Component />
-}
+  python manage.py test
 ```
 
 <!-- Roadmap -->
 ## :compass: Roadmap
 
-* [x] Todo 1
-* [ ] Todo 2
+* [x] Data Acquisition
+* [x] Research
+* [x] Design Architecture
+* [x] Test with Different Hyperparameters
+* [x] Keep Training and Improving
+* [x] Design REST API
+* [x] Design User Interface
+* [x] Backend Setup
+* [x] Deploy Model
+* [x] Performance Monitoring Using Tensorboard
 
 
 <!-- Contributing -->
 ## :wave: Contributing
 
-<a href="https://github.com/AnisH1427/Multilingual-OCR-FYP/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=AnisH1427/awesome-Multilingual-OCR-FYP" />
+<!-- <a href="https://github.com/AnisH1427/Multilingual-OCR-FYP/graphs/contributors"> -->
+  <!-- <img src="https://contrib.rocks/image?repo=AnisH1427/awesome-Multilingual-OCR-FYP" /> -->
 </a>
 
-
-Contributions are always welcome!
-
-See `contributing.md` for ways to get started.
-
+This project is Solely Contributed by MySelf as Final Year Project
 
 <!-- Code of Conduct -->
 ### :scroll: Code of Conduct
@@ -277,29 +286,34 @@ See `contributing.md` for ways to get started.
 Please read the [Code of Conduct](https://github.com/AnisH1427/Multilingual-OCR-FYP/blob/master/CODE_OF_CONDUCT.md)
 
 <!-- FAQ -->
-## :grey_question: FAQ
+## :grey_question: Academic Questions and Answers
 
-- Question 1
+- What are the limitation in Current OCR so that Intelligent OCR is still the topic of research?
 
   + Answer 1
 
-- Question 2
+- Why OCR sysytem dont have different level of Performance in different languages?
 
   + Answer 2
+
+- What can be done to improve the existing OCR systems?
+
+  + Answer 3
+
 
 
 <!-- License -->
 ## :warning: License
 
-Distributed under the no License. See LICENSE.txt for more information.
+Distributed under MIT license
 
 
 <!-- Contact -->
 ## :handshake: Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Your Name - [@linkedin](https://www.linkedin.com/in/anish-khatiwada-42a719229/) - anishkhatioda@outlook.com, anishkhatioda@gmail.com
 
-Project Link: [https://github.com/Louis3797/awesome-readme-template](https://github.com/AnisH1427/Multilingual-OCR-FYP)
+Project Link: (https://github.com/AnisH1427/Multilingual-OCR-FYP)
 
 
 <!-- Acknowledgments -->
@@ -307,8 +321,6 @@ Project Link: [https://github.com/Louis3797/awesome-readme-template](https://git
 
 Use this section to mention useful resources and libraries that you have used in your projects.
 
- - [Shields.io](https://shields.io/)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [Emoji Cheat Sheet](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#travel--places)
- - [Readme Template](https://github.com/othneildrew/Best-README-Template)
+ - [Biru Shrestha] - Project Supervisor 
+ - [Uttam Acharya] - Reader
 
