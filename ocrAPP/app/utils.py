@@ -34,6 +34,22 @@ class ImageToWordModel(OnnxInferenceModel):
         return text
     
 def chain_line(img):
+    """
+    Finds the contours (boundaries) of the objects in a given image.
+
+    Args:
+        img (numpy.ndarray): The input image as a numpy array.
+
+    Returns:
+        list: A list of contours, where each contour is represented as a list of (x, y) coordinates.
+
+    Notes:
+        - This function performs the following steps:
+            1. Applies binary thresholding to the input image to create a black-and-white image.
+            2. Dilates the binary image to expand the white regions.
+            3. Finds the contours (boundaries) of the white regions in the dilated image using the Chain Approximation Simple algorithm.
+        - The function returns a list of the detected contours, which can be useful for tasks like object detection, shape analysis, or other image processing applications.
+    """
     _, thresholded = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV)
     dilated = cv2.dilate(thresholded, np.ones((5, 200), np.uint8), iterations=1)
     contours, _ = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -46,6 +62,23 @@ def chain_word(img):
     return contours
 
 def otsu_line(img):
+    """
+    Detects and returns the contours of text lines in an image using the Otsu's method for thresholding.
+
+    Args:
+        img (numpy.ndarray): The input image as a numpy array.
+
+    Returns:
+        list: A list of contours, where each contour is represented as a list of (x, y) coordinates.
+
+    Notes:
+        - This function performs the following steps:
+            1. Applies Gaussian blurring to the input image to reduce noise.
+            2. Applies Otsu's method for automatic thresholding, creating a binary image.
+            3. Applies a closing morphological operation using a rectangular kernel to connect the text lines.
+            4. Finds the contours of the connected text lines using the OpenCV `findContours` function.
+        - The function returns a list of the detected contours, which can be useful for tasks like text extraction, layout analysis, or other document processing applications.
+    """
     blurred = cv2.GaussianBlur(img, (3, 3), 0)
     
     bw = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]

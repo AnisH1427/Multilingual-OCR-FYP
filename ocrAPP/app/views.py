@@ -214,7 +214,7 @@ def tensorboard(request):
     url1 = tb1.launch()
 
     tb2 = program.TensorBoard()
-    tb2.configure(argv=[None, '--logdir', 'Model/Devanagari/202404190616/logs'])
+    tb2.configure(argv=[None, '--logdir', 'Model/Devanagari/202405030509/logs'])
     url2 = tb2.launch()
 
     return HttpResponse(f'<h2>English Model</h2><iframe src="{url1}" width="100%" height="600"></iframe><h2>Devanagari Model</h2><iframe src="{url2}" width="100%" height="600"></iframe>')
